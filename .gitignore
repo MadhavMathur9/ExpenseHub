@@ -1,0 +1,93 @@
+# Dependencies & Package Managers
+node_modules/
+**/node_modules/
+.pnp/
+.pnp.*
+
+# Build Outputs
+target/
+**/target/
+dist/
+**/dist/
+build/
+**/build/
+.next/
+out/
+*.tsbuildinfo
+
+# Frontend & Vite Cache
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+.vite/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+*.pfx
+*.crt
+*.cer
+
+# Spring Boot Configuration (contains credentials - never commit with real values)
+**/src/main/resources/application.properties
+**/src/main/resources/application*.properties
+**/src/main/resources/application*.yml
+**/src/main/resources/application*.yaml
+
+# Docker override & secret files
+docker-compose.override.yml
+docker.env
+
+# Postman environments (may contain real auth tokens)
+*.postman_environment.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDE & Editor Files
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.sts4-cache/
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# System & OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary Files
+abc.txt
+*.tmp
+*.swp
+*.bak
+
+# Java binaries
+*.class
+*.jar
+*.war
+*.ear

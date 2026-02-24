@@ -1,0 +1,942 @@
+{
+	"info": {
+		"_postman_id": "bfd5d71c-30b1-4f1b-8ee3-e4d0fc4e98f7",
+		"name": "ExpenseHub API Collection",
+		"description": "Comprehensive Postman collection for testing the ExpenseHub API endpoints, including custom JWT local auth and Keycloak OAuth2 Resource Server authentication.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication & Keycloak",
+			"item": [
+				{
+					"name": "Keycloak Fetch Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"token\", jsonData.access_token);",
+									"    console.log(\"OAuth2 Access Token cached successfully!\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "user@email.com",
+									"type": "text",
+									"description": "Replace with user email"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text",
+									"description": "Replace with user password"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak_url}}/realms/{{realm}}/protocol/openid-connect/token",
+							"host": [
+								"{{keycloak_url}}"
+							],
+							"path": [
+								"realms",
+								"{{realm}}",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						},
+						"description": "Requests an access token directly from Keycloak via the Resource Owner Password Credentials flow."
+					},
+					"response": []
+				},
+				{
+					"name": "Register User (Native Backend)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"John Doe\",\n    \"email\": \"user@email.com\",\n    \"password\": \"password123\",\n    \"profileImageUrl\": \"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&h=80\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "Registers a new user profile. Check the application console log for the tokenized activation link."
+					},
+					"response": []
+				},
+				{
+					"name": "Login User (Local Auth Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"token\", jsonData.token);",
+									"    console.log(\"Local JWT cached successfully!\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@email.com\",\n    \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Logs in the user natively using the internal Spring database credentials and generates a local JWT token cached as {{token}}."
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/activate?token=insert-activation-token-here",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activate"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "insert-activation-token-here"
+								}
+							]
+						},
+						"description": "Activates a registered user account using the activation UUID token printed in the console."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Authenticated User Details (/me)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"me"
+							]
+						},
+						"description": "Returns the logged-in user profile details using standard Bearer authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"John Updated Doe\",\n    \"profileImageUrl\": \"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"me"
+							]
+						},
+						"description": "Updates full name, avatar or password of the currently authenticated profile."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard & Advisors",
+			"item": [
+				{
+					"name": "Get Dashboard Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/dashboard",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"dashboard"
+							]
+						},
+						"description": "Gives total income, total expense, balance, recent transactions, and category metrics breakdown."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Gemini AI Financial Advice",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/advisor/insights",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"advisor",
+								"insights"
+							]
+						},
+						"description": "Submits transaction history logs to Google Gemini models and returns markdown financial advisor budgeting insights."
+					},
+					"response": []
+				},
+				{
+					"name": "Export Data to Excel Spreadsheet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/excel/export",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"excel",
+								"export"
+							]
+						},
+						"description": "Downloads the compiled workbook containing income and expenses logs."
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Transactions Ledger",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"ALL\",\n    \"startDate\": \"2026-01-01\",\n    \"endDate\": \"2026-12-31\",\n    \"keyword\": \"\",\n    \"sortField\": \"date\",\n    \"sortOrder\": \"desc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/filter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"filter"
+							]
+						},
+						"description": "Filters incomes and expenses using keyword checks, date ranges, and custom sorting."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category Management",
+			"item": [
+				{
+					"name": "Get Categories List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						},
+						"description": "Loads all custom and default categories configured for the authenticated profile."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Gadgets\",\n    \"type\": \"EXPENSE\",\n    \"icon\": \"🎮\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						},
+						"description": "Creates a custom category mapped to type EXPENSE or INCOME."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Subscriptions & Gaming\",\n    \"type\": \"EXPENSE\",\n    \"icon\": \"🕹️\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						},
+						"description": "Updates an existing category. Replace '1' with the target category ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						},
+						"description": "Deletes a category. Replace '1' with the target category ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Income Logs",
+			"item": [
+				{
+					"name": "Get Income Logs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/incomes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"incomes"
+							]
+						},
+						"description": "Gets all income transactions of the current profile."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Income Log",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Freelance Coding\",\n    \"amount\": 1250.00,\n    \"categoryId\": 1,\n    \"date\": \"2026-07-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/incomes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"incomes"
+							]
+						},
+						"description": "Creates an income. Replace categoryId with a valid INCOME category ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Income Log",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Freelance App Coding Update\",\n    \"amount\": 1500.00,\n    \"categoryId\": 1,\n    \"date\": \"2026-07-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/incomes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"1"
+							]
+						},
+						"description": "Modifies a logged income. Replace '1' with the target income ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Income Log",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/incomes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"1"
+							]
+						},
+						"description": "Deletes an income entry. Replace '1' with the target income ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expense Logs",
+			"item": [
+				{
+					"name": "Get Expense Logs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/expenses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						},
+						"description": "Gets all expense transactions of the current profile."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Expense Log",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Weekly groceries\",\n    \"amount\": 84.50,\n    \"categoryId\": 4,\n    \"date\": \"2026-07-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/expenses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						},
+						"description": "Creates an expense. Replace categoryId with a valid EXPENSE category ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Expense Log",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Groceries & organic snacks\",\n    \"amount\": 95.00,\n    \"categoryId\": 4,\n    \"date\": \"2026-07-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/expenses/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"1"
+							]
+						},
+						"description": "Modifies a logged expense. Replace '1' with the target expense ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Expense Log",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/expenses/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"1"
+							]
+						},
+						"description": "Deletes an expense entry. Replace '1' with the target expense ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "System Health",
+			"item": [
+				{
+					"name": "Health Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"status"
+							]
+						},
+						"description": "Check if server application is online."
+					},
+					"response": []
+				},
+				{
+					"name": "Email Send Test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/email/test?email=test@email.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"email",
+								"test"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "test@email.com"
+								}
+							]
+						},
+						"description": "Manually trigger a registration test activation email template."
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@email.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/forgot-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"forgot-password"
+							]
+						},
+						"description": "Trigger forgot password activation links compiled in logs."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password Submit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"PASTE_TOKEN_FROM_CONSOLE_HERE\",\n    \"password\": \"newPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/reset-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reset-password"
+							]
+						},
+						"description": "Update profile with new password using reset token."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8082",
+			"type": "string"
+		},
+		{
+			"key": "keycloak_url",
+			"value": "http://localhost:8081",
+			"type": "string"
+		},
+		{
+			"key": "realm",
+			"value": "expensehub",
+			"type": "string"
+		},
+		{
+			"key": "client_id",
+			"value": "expensehub-client",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

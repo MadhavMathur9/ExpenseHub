@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+target/
+**/target/
+build/
+**/build/
+dist/
+**/dist/
+
+# Environment files & Spring Boot Configuration
+# application.properties/yml may contain DB passwords, JWT secrets, API keys - never commit with real values
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+src/main/resources/application.properties
+src/main/resources/application*.properties
+src/main/resources/application*.yml
+src/main/resources/application*.yaml
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+*.pfx
+*.crt
+*.cer
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE & Editor files
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.sts4-cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+abc.txt
+*.tmp
+*.swp
+*.bak
+
+# Java binaries
+*.class
+*.jar
+*.war
+*.ear
