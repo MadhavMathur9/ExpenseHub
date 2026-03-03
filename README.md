@@ -9,7 +9,7 @@
 </h2>
 
 <p> 
-Java full-stack, fully responsive Ai powered Fitness app using SpringBoot, React, Eureka Server, RabbitMQ, Authentication with Keycloak, Google Gemini Api, MySql, Spring Cloud Config Server.
+Java full-stack, fully responsive AI-powered fitness app using Spring Boot, React, Eureka Server, RabbitMQ, authentication with Keycloak, Google Gemini API, MySQL, and Spring Cloud Config Server.
 </p>
 
 <a href="" target="_blank"><strong>➥ Live Demo</strong></a>
@@ -127,6 +127,7 @@ npm run dev
 <!-- 4️⃣ **Start the Frontend Server:**5️⃣
 
 ```bash
+cd Project_Aithlete
 cd ../frontend
 npm run dev
 ``` -->
