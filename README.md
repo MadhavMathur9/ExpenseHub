@@ -74,7 +74,7 @@ Designed with scalability and responsiveness in mind, Aithlete features a micros
 - Deployment: AWS
 
 
-## Road Map
+## Roadmap
 
 The following roadmap outlines planned features and improvements for Aithlete, inspired by community feedback and future trends in AI-powered fitness applications:
 
@@ -143,7 +143,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## License
 
 - This project is licensed under the MIT License - see the [LICENSE](https://github.com/MadhavMathur/Aithlete?tab=MIT-1-ov-file) file for details.
-- The project Bean & Brew Coffee is packaged and distributed using the [MIT License](https://choosealicense.com/licenses/mit/) which allows for commercial use, distribution, modification and private use provided that all copies of the software contain the same license and copyright.
+- The project Aithlete is packaged and distributed using the [MIT License](https://choosealicense.com/licenses/mit/) which allows for commercial use, distribution, modification and private use provided that all copies of the software contain the same license and copyright.
 
 ## Acknowledgements
 
