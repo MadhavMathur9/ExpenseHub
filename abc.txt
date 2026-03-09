@@ -12,3 +12,7 @@
 10. Prepare for deployment or delivery as needed.
 
 // Update this file with specific steps tailored to your project as you progress.
+
+// This file outlines the initial steps required to make the Project_Aithlete viable.
+// It is intended as a planning or checklist document for project setup and execution.
+// steps for making this project viable
