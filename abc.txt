@@ -1,13 +1,11 @@
-// Kubernetes Role in this Project:
+To deploy your project on Vercel, follow these steps:
 
-Kubernetes can be used to orchestrate the deployment, scaling, and management of containerized applications in this project. Instead of deploying directly to AWS services like EC2 or Elastic Beanstalk, you can use Amazon EKS (Elastic Kubernetes Service) to run Kubernetes clusters on AWS. Kubernetes handles container scheduling, load balancing, rolling updates, and resource management, providing a robust platform for deploying microservices or distributed systems.
+1. **Prepare your project**: Make sure your application is ready for deployment (e.g., Next.js, React, or static site).
+2. **Push your code to GitHub/GitLab/Bitbucket**: Vercel integrates with these platforms.
+3. **Sign up/log in to Vercel**: Go to [vercel.com](https://vercel.com/) and create an account.
+4. **Import your repository**: Click "New Project" and select your repository.
+5. **Configure build settings**: Vercel auto-detects most frameworks. Adjust settings if needed.
+6. **Deploy**: Click "Deploy". Vercel will build and deploy your project.
+7. **Access your site**: Vercel provides a live URL after deployment.
 
-Steps to use Kubernetes in this project:
-1. Containerize your application (e.g., using Docker).
-2. Create Kubernetes manifests (Deployment, Service, ConfigMap, etc.).
-3. Set up an EKS cluster on AWS.
-4. Deploy your containers to the EKS cluster using kubectl.
-5. Manage scaling, updates, and networking through Kubernetes resources.
-6. Monitor and log using Kubernetes-native tools or integrate with AWS CloudWatch.
-
-Refer to the Kubernetes and EKS documentation for detailed setup and deployment instructions.
+No Kubernetes or AWS setup is needed for Vercel deployments.
