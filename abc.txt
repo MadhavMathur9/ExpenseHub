@@ -1,15 +1,1 @@
-/*
- * This file documents the process of selecting a suitable free database for the project.
- * It provides guidance and considerations for identifying and choosing an appropriate database solution.
- * The content is intended to assist in evaluating free database options to meet project requirements.
- *
- * Recommended free databases:
- * - SQLite: Lightweight, serverless, ideal for small to medium projects.
- * - PostgreSQL: Powerful, open-source, supports advanced features and scalability.
- * - MySQL/MariaDB: Widely used, reliable, suitable for web applications.
- *
- * Choose based on project requirements such as scalability, complexity, and ease of use.
- */
-// Its purpose is to assist in identifying and choosing an appropriate database solution.
-// It is intended to help identify and select an appropriate database solution.
-// Which free database should be used for this project?
+
