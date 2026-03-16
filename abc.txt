@@ -1,3 +1,3 @@
-Project Aithlete is an innovative platform designed to connect athletes, coaches, and sports enthusiasts. 
-It offers personalized training plans, performance tracking, and a vibrant community for sharing achievements and tips. 
-With a focus on user experience and data-driven insights, Project Aithlete aims to empower individuals to reach their athletic goals and foster a supportive environment for growth and collaboration.
+Project Aithlete is an AI-powered fitness platform designed to connect athletes, coaches, and sports enthusiasts.
+It offers personalized training plans, performance tracking, and a vibrant community for sharing achievements and tips.
+With advanced AI features, a focus on user experience, and data-driven insights, Project Aithlete empowers individuals to reach their athletic goals and fosters a supportive environment for growth and collaboration.
