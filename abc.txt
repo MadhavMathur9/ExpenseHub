@@ -1,27 +1,36 @@
-1. Set up the Virtual Machine:
-    - Choose a cloud provider (Azure, AWS, GCP) or use local virtualization (VirtualBox, VMware).
-    - Create a VM with the required OS and resources (CPU, RAM, storage).
+/*
+    Deployment Steps Documentation for Setting Up This Project on a Virtual Machine with AWS
 
-2. Configure the VM:
-    - Install necessary software (e.g., Git, build tools, runtime environments).
-    - Set up network and firewall rules for access.
+    1. Set up the Virtual Machine:
+        - Log in to the AWS Management Console.
+        - Navigate to EC2 and launch a new instance.
+        - Choose an appropriate Amazon Machine Image (AMI) for your required OS.
+        - Select an instance type based on your CPU, RAM, and storage needs.
+        - Configure network settings and assign a key pair for SSH access.
 
-3. Transfer Project Files:
-    - Use Git to clone the repository, or upload files via SCP, SFTP, or cloud storage.
+    2. Configure the VM:
+        - Connect to the EC2 instance using SSH: `ssh -i <keypair.pem> ec2-user@<public-ip>`.
+        - Update the package manager and install necessary software (e.g., Git, build tools, runtime environments).
+        - Adjust security group rules to allow required inbound/outbound traffic (e.g., HTTP, HTTPS, SSH).
 
-4. Build the Project:
-    - Navigate to the project directory.
-    - Run build commands (e.g., `npm install && npm run build`, `mvn package`, `dotnet build`).
+    3. Transfer Project Files:
+        - Clone the repository using Git: `git clone <repo-url>`.
+        - Alternatively, upload files using SCP or SFTP.
 
-5. Deploy the Project:
-    - Copy build artifacts to the deployment directory.
-    - Configure environment variables and settings.
-    - Start the application (e.g., `node app.js`, `dotnet run`, `java -jar app.jar`).
-    - Optionally, set up a process manager (e.g., PM2, systemd) for reliability.
+    4. Build the Project:
+        - Navigate to the project directory.
+        - Run the appropriate build commands (e.g., `npm install && npm run build`, `mvn package`, `dotnet build`).
 
-6. Test and Monitor:
-    - Access the application via browser or API client.
-    - Monitor logs and performance.
+    5. Deploy the Project:
+        - Move build artifacts to the deployment directory if needed.
+        - Set environment variables and configuration files as required.
+        - Start the application (e.g., `node app.js`, `dotnet run`, `java -jar app.jar`).
+        - Optionally, use a process manager like PM2 or systemd for reliability.
 
-7. (Optional) Automate:
-    - Use scripts or CI/CD pipelines for repeatable deployments.
+    6. Test and Monitor:
+        - Access the application using the EC2 public IP or DNS in your browser or API client.
+        - Monitor logs and instance performance via AWS CloudWatch or locally.
+
+    7. (Optional) Automate:
+        - Use shell scripts or AWS CodePipeline/CodeDeploy for automated deployments.
+*/
