@@ -1,5 +1,5 @@
 /*
-    Deployment Steps Documentation for Setting Up This Project on a Virtual Machine with AWS
+    Deployment Steps Documentation for Setting Up This Project on a Virtual Machine with AWS or Google Cloud
 
     1. Set up the Virtual Machine:
         - Log in to the AWS Management Console.
