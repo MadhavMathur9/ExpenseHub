@@ -1,36 +1,44 @@
 /*
-    Deployment Steps Documentation for Setting Up This Project on a Virtual Machine with AWS or Google Cloud
-
-    1. Set up the Virtual Machine:
-        - Log in to the AWS Management Console.
-        - Navigate to EC2 and launch a new instance.
-        - Choose an appropriate Amazon Machine Image (AMI) for your required OS.
-        - Select an instance type based on your CPU, RAM, and storage needs.
-        - Configure network settings and assign a key pair for SSH access.
-
-    2. Configure the VM:
-        - Connect to the EC2 instance using SSH: `ssh -i <keypair.pem> ec2-user@<public-ip>`.
-        - Update the package manager and install necessary software (e.g., Git, build tools, runtime environments).
-        - Adjust security group rules to allow required inbound/outbound traffic (e.g., HTTP, HTTPS, SSH).
-
-    3. Transfer Project Files:
+    # Deployment Steps Documentation for Setting Up This Project on a Virtual Machine with AWS or Google Cloud (Gemini API)
+    
+    1. **Set up the Virtual Machine:**
+        - Log in to the AWS Management Console or Google Cloud Console.
+        - For AWS: Navigate to EC2 and launch a new instance.
+        - For Google Cloud: Go to Compute Engine and create a new VM instance.
+        - Choose an appropriate OS image (Amazon Linux, Ubuntu, etc.).
+        - Select instance type/machine type based on your requirements.
+        - Configure network settings and assign a key pair (AWS) or SSH key (GCP) for access.
+    
+    2. **Configure the VM:**
+        - Connect to the instance using SSH:
+            - AWS: `ssh -i <keypair.pem> ec2-user@<public-ip>`
+            - GCP: `gcloud compute ssh <instance-name> --zone=<zone>`
+        - Update the package manager and install necessary software (e.g., Git, build tools, Python, Node.js).
+        - Adjust firewall/security group rules to allow required traffic (HTTP, HTTPS, SSH).
+    
+    3. **Set Up Gemini API Access:**
+        - Obtain Gemini API credentials from Google AI Studio (https://aistudio.google.com/app/apikey).
+        - Store the API key securely on the VM (e.g., as an environment variable or in a config file).
+        - Install the Gemini API client library for your programming language (e.g., `pip install google-generativeai` for Python).
+    
+    4. **Transfer Project Files:**
         - Clone the repository using Git: `git clone <repo-url>`.
-        - Alternatively, upload files using SCP or SFTP.
-
-    4. Build the Project:
+        - Or upload files using SCP, SFTP, or Google Cloud Storage.
+    
+    5. **Build the Project:**
         - Navigate to the project directory.
-        - Run the appropriate build commands (e.g., `npm install && npm run build`, `mvn package`, `dotnet build`).
-
-    5. Deploy the Project:
+        - Run the appropriate build commands (e.g., `npm install && npm run build`, `pip install -r requirements.txt`).
+    
+    6. **Deploy the Project:**
         - Move build artifacts to the deployment directory if needed.
-        - Set environment variables and configuration files as required.
-        - Start the application (e.g., `node app.js`, `dotnet run`, `java -jar app.jar`).
+        - Set environment variables and configuration files, including Gemini API credentials.
+        - Start the application (e.g., `node app.js`, `python app.py`).
         - Optionally, use a process manager like PM2 or systemd for reliability.
-
-    6. Test and Monitor:
-        - Access the application using the EC2 public IP or DNS in your browser or API client.
-        - Monitor logs and instance performance via AWS CloudWatch or locally.
-
-    7. (Optional) Automate:
-        - Use shell scripts or AWS CodePipeline/CodeDeploy for automated deployments.
-*/
+    
+    7. **Test and Monitor:**
+        - Access the application using the VM's public IP or DNS.
+        - Test Gemini API integration by making sample requests.
+        - Monitor logs and instance performance via AWS CloudWatch, Google Cloud Monitoring, or locally.
+    
+    8. **(Optional) Automate:**
+        - Use shell scripts, AWS CodePipeline/CodeDeploy, or Google Cloud Deployment Manager for automation.
