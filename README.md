@@ -127,7 +127,7 @@ npm run dev
 <!-- 4️⃣ **Start the Frontend Server:**5️⃣
 
 ```bash
-Project_Aithletecd 
+cd Project_Aithlete
 cd ../frontend
 npm run dev
 ``` -->
