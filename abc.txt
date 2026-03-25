@@ -1,13 +1,14 @@
-**AI Integration (Gemini API):**
-    - Ensure the Gemini API client library is installed (see Step 3).
-    - Import and initialize the Gemini API client in your application code using the stored API key.
-    - Implement functions to send requests to the Gemini API and handle responses.
-    - Example (Python):
-        ```python
-        import google.generativeai as genai
+Frontend:
+- React.js (JavaScript) or Vue.js
 
-        genai.configure(api_key="YOUR_GEMINI_API_KEY")
-        response = genai.generate_content("Hello, Gemini!")
-        print(response.text)
-        ```
-    - Test the integration by making sample API calls and verifying the output.
+Backend:
+- Python (Flask or FastAPI)
+- Gemini API client library (google-generativeai)
+
+Database:
+- PostgreSQL or MongoDB
+
+Other Tools:
+- Git for version control
+- Docker for containerization (optional)
+- VS Code or PyCharm for development
