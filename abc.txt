@@ -1,12 +1,24 @@
 Frontend:
-- React.js (JavaScript) or Vue.js
+- React.js (JavaScript) ✅
+- Axios ✅
+- Lucide React ✅
+- Tailwind CSS ✅
+- React Hot Toast ✅
+- Emoji Picker ✅
+- React Charts ✅
+- Vue.js
 
 Backend:
 - Python (Flask or FastAPI)
+- Java (Spring Boot) ✅
+- Spring Data JPA ✅
+- Spring Security with JWT Authentication ✅
 - Gemini API client library (google-generativeai)
 
 Database:
-- PostgreSQL or MongoDB
+- PostgreSQL
+- MongoDB
+- MySQL ✅
 
 Other Tools:
 - Git for version control
