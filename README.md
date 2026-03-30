@@ -47,7 +47,7 @@ Engineered for scalability and responsiveness, ExpenseHub adopts a microservices
 - **Feature 7:** Integration with Google Gemini API for AI-powered insights.
 - **Feature 8:** Cloud-based Configuration and Scalable Microservices.
 - **Feature 9:** Responsive Design for Mobile and Desktop.
-- **Feature 10:** Easy Deployment with AWS.
+- **Feature 10:** Easy Deployment with Netlify & Render.
 - **Feature 11:** Register and Login.
 - **Feature 12:** Upload profile picture to cloudinary
 - **Feature 13:** Customer Emoji picker
