@@ -123,7 +123,7 @@ npm install
 Create a `.env` file in the `ExpenseHub` directory and add the following:
 
 ```env
-
+PORT=3000
 
 ``` 
 
