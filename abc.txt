@@ -1,3 +1,5 @@
+## Tech Stack
+
 Frontend:
 - React.js (JavaScript) ✅
 - Axios ✅
@@ -24,3 +26,56 @@ Other Tools:
 - Git for version control
 - Docker for containerization (optional)
 - VS Code or PyCharm for development
+
+
+## Features
+
+Here’s a brief explanation of each feature:
+
+- Fully Featured Income Tracker app on Microservices Architecture:
+The app tracks income and expenses, built using microservices for scalability and modularity.
+
+- AI Integration in Microservices:
+AI features are embedded within microservices to provide smart insights and automation.
+
+- Step By Step Easy To Follow Guide:
+Users get a clear, guided walkthrough for setup and usage.
+
+- Real-time Notifications and Progress Tracking:
+Users receive instant updates and can monitor their financial progress live.
+
+- Manage Income and Expense with Validation:
+The app ensures data accuracy by validating entries for income and expenses.
+
+- Secure Authentication and Role-based Access:
+Only authorized users can access the app, with permissions based on their roles.
+
+- Integration with Google Gemini API for AI-powered Insights:
+The app uses Google Gemini to analyze financial data and provide intelligent recommendations.
+
+- Cloud-based Configuration and Scalable Microservices:
+Settings and services are hosted in the cloud, allowing easy scaling as user demand grows.
+
+- Responsive Design for Mobile and Desktop:
+The app works smoothly on both mobile devices and desktops.
+
+- Easy Deployment with Netlify & Render:
+The app can be quickly launched using Netlify and Render hosting platforms.
+
+- Register and Login:
+Users can create accounts and securely log in.
+
+- Upload Profile Picture to Cloudinary:
+Users can upload and store profile images using the Cloudinary service.
+
+- Custom Emoji Picker:
+Users can select emojis to personalize their experience.
+
+- Analyze Data with React Charts:
+Financial data is visualized using interactive charts built with React.
+
+- Download and Email Transactions:
+Users can export transaction data and send it via email.
+
+- Send Daily Email Reminders:
+The app automatically sends daily emails to remind users about important tasks or updates.
