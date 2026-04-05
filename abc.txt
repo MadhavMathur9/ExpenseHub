@@ -1,81 +1,44 @@
-## Tech Stack
+- Multi-Currency Support:
+Users can manage transactions in different currencies with automatic conversion rates.
 
-Frontend:
-- React.js (JavaScript) ✅
-- Axios ✅
-- Lucide React ✅
-- Tailwind CSS ✅
-- React Hot Toast ✅
-- Emoji Picker ✅
-- React Charts ✅
-- Vue.js
+- Advanced Search and Filtering:
+Quickly find transactions using powerful search and filter options.
 
-Backend:
-- Python (Flask or FastAPI)
-- Java (Spring Boot) ✅
-- Spring Data JPA ✅
-- Spring Security with JWT Authentication ✅
-- Gemini API client library (google-generativeai)
+- Recurring Transactions:
+Set up automatic recurring income or expense entries.
 
-Database:
-- PostgreSQL
-- MongoDB
-- MySQL ✅
+- Budget Planning and Tracking:
+Create budgets and monitor spending against targets.
 
-Other Tools:
-- Git for version control
-- Docker for containerization (optional)
-- VS Code or PyCharm for development
+- Category Management:
+Organize transactions by customizable categories and tags.
 
+- Audit Trail and Activity Logs:
+Track all user actions for transparency and compliance.
 
-## Features
+- Data Import and Export:
+Easily import data from CSV/Excel and export reports.
 
-Here’s a brief explanation of each feature:
+- Two-Factor Authentication (2FA):
+Enhance account security with an additional verification step.
 
-- Fully Featured Income Tracker app on Microservices Architecture:
-The app tracks income and expenses, built using microservices for scalability and modularity.
+- API Access for Third-Party Integrations:
+Connect with other apps and services via secure APIs.
 
-- AI Integration in Microservices:
-AI features are embedded within microservices to provide smart insights and automation.
+- Dark Mode and Theme Customization:
+Personalize the app’s appearance with different themes.
 
-- Step By Step Easy To Follow Guide:
-Users get a clear, guided walkthrough for setup and usage.
+- In-App Support and FAQ:
+Access help resources and contact support directly from the app.
 
-- Real-time Notifications and Progress Tracking:
-Users receive instant updates and can monitor their financial progress live.
+- Transaction Attachments:
+Upload receipts or documents to individual transactions.
 
-- Manage Income and Expense with Validation:
-The app ensures data accuracy by validating entries for income and expenses.
+- Scheduled Backups:
+Automatically back up data to prevent loss.
 
-- Secure Authentication and Role-based Access:
-Only authorized users can access the app, with permissions based on their roles.
+- User Activity Analytics:
+Gain insights into user engagement and app usage patterns.
 
-- Integration with Google Gemini API for AI-powered Insights:
-The app uses Google Gemini to analyze financial data and provide intelligent recommendations.
-
-- Cloud-based Configuration and Scalable Microservices:
-Settings and services are hosted in the cloud, allowing easy scaling as user demand grows.
-
-- Responsive Design for Mobile and Desktop:
-The app works smoothly on both mobile devices and desktops.
-
-- Easy Deployment with Netlify & Render:
-The app can be quickly launched using Netlify and Render hosting platforms.
-
-- Register and Login:
-Users can create accounts and securely log in.
-
-- Upload Profile Picture to Cloudinary:
-Users can upload and store profile images using the Cloudinary service.
-
-- Custom Emoji Picker:
-Users can select emojis to personalize their experience.
-
-- Analyze Data with React Charts:
-Financial data is visualized using interactive charts built with React.
-
-- Download and Email Transactions:
-Users can export transaction data and send it via email.
-
-- Send Daily Email Reminders:
-The app automatically sends daily emails to remind users about important tasks or updates.
+- Localization and Multi-Language Support:
+Use the app in multiple languages for global accessibility.
