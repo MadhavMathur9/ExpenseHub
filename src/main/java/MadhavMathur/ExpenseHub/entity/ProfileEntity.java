@@ -1,6 +1,8 @@
 package MadhavMathur.ExpenseHub.entity;
 
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,5 +27,16 @@ public class ProfileEntity
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean isActive;
-    private string activationToken;
+    private String activationToken;
+    private LocalDateTime activationTokenExpiry;
+
+
+    public void prePersist() {
+
+       if (this.createdAt = null) {
+        this.createdAt = LocalDateTime.now();
+
+        }
+        this.updatedAt = LocalDateTime.now();
+    }
 }
