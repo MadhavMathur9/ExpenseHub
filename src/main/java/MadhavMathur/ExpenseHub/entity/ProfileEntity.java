@@ -3,7 +3,10 @@ package MadhavMathur.ExpenseHub.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,24 +22,27 @@ import lombok.NoArgsConstructor;
 
 public class ProfileEntity 
 {
+    @Id
     private Long id;
     private String fullName;
+    @Column(unique = true)
     private String email;
     private String password;
-    private String profieImageUrl;
+    private String profileImageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean isActive;
     private String activationToken;
-    private LocalDateTime activationTokenExpiry;
 
 
+    @PrePersist
     public void prePersist() {
 
-       if (this.createdAt = null) {
-        this.createdAt = LocalDateTime.now();
-
-        }
-        this.updatedAt = LocalDateTime.now();
+       if (this.isActive == null) {
+              this.isActive = false;
+         }
     }
+
+
+
 }
