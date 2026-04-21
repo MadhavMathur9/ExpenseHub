@@ -51,7 +51,4 @@ public class ProfileEntity
               this.isActive = false;
          }
     }
-
-
-
 }
