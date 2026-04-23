@@ -123,29 +123,30 @@ npm install
 Create a `.env` file in the `ExpenseHub` directory and add the following:
 
 ```env
-PORT=3000
+PORT=8080
 
 ``` 
 
-3️⃣ **Start the development Server:**
+3️⃣ **Start the Backend Server:**
 
 ```bash
 cd Project_ExpenseHub
-cd ExpenseHub
+
 java run
+http://localhost:8080/api/v1.0/health
 ```
 
-<!-- 4️⃣ **Start the Frontend Server:**5️⃣
+4️⃣ **Start the Frontend Server:**
 
 ```bash
 cd Project_ExpenseHub
-cd ExpenseHub
-java run
-``` -->
+cd ExpenseHubWebApp
+npm run
+``` 
 
-4️⃣ **Open the Application:**
+5️⃣ **Open the Application:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. 🚀
+Open [http://localhost:8080](http://localhost:8080/api/v1.0/health) with your browser to see the result. 🚀
 
 
  ## Report Issues
