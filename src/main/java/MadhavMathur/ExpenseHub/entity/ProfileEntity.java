@@ -19,7 +19,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tbl_profiles")
+@Table(name = "tb1_profiles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
