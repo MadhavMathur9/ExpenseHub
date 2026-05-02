@@ -140,9 +140,16 @@ http://localhost:8080/api/v1.0/health
 
 ```bash
 cd Project_ExpenseHub
+
+cd ExpenseHub
+
+mvn spring-boot:run
+
 cd ExpenseHubWebApp
+
 npm run
 ``` 
+<!--  cd "Web Development Projects"  -->
 
 5️⃣ **Open the Application:**
 
