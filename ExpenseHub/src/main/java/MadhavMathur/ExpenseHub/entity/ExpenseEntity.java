@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb1_expenses")
 
-
 public class ExpenseEntity {
 
     @Id
@@ -50,5 +49,5 @@ public class ExpenseEntity {
             this.date = LocalDate.now();
         }
     }
-    
+
 }

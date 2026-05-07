@@ -1,6 +1,5 @@
 package MadhavMathur.ExpenseHub.entity;
 
-
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,8 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
-public class ProfileEntity 
-{
+public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,12 +41,11 @@ public class ProfileEntity
     private Boolean isActive;
     private String activationToken;
 
-
     @PrePersist
     public void prePersist() {
 
-       if (this.isActive == null) {
-              this.isActive = false;
-         }
+        if (this.isActive == null) {
+            this.isActive = false;
+        }
     }
 }

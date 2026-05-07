@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb1_incomes")
 
-
 public class IncomeEntity {
 
     @Id

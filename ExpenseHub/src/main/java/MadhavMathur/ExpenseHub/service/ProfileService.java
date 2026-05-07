@@ -2,12 +2,10 @@ package MadhavMathur.ExpenseHub.service;
 
 import org.springframework.stereotype.Service;
 
-
 import MadhavMathur.ExpenseHub.repository.ProfileRepository;
 import MadhavMathur.ExpenseHub.dto.ProfileDTO;
 import MadhavMathur.ExpenseHub.entity.ProfileEntity;
 // import MadhavMathur.ExpenseHub.dto.AuthDTO;
-
 
 // import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,27 +17,21 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 
-public class ProfileService 
-{
+public class ProfileService {
     private final ProfileRepository profileRepository;
 
-
-// Helper Method    
-    public ProfileDTO registerProfile(ProfileDTO profileDTO) 
-    {
-       ProfileEntity newProfile = toEntity(profileDTO);
-       newProfile.setActivationToken(UUID.randomUUID().toString());
+    // Helper Method
+    public ProfileDTO registerProfile(ProfileDTO profileDTO) {
+        ProfileEntity newProfile = toEntity(profileDTO);
+        newProfile.setActivationToken(UUID.randomUUID().toString());
         newProfile = profileRepository.save(newProfile);
 
-
-
-       return toDTO(newProfile);
+        return toDTO(newProfile);
     }
-// Helper Method
+    // Helper Method
 
-    public ProfileEntity toEntity(ProfileDTO profileDTO) 
-    {
-       return ProfileEntity.builder()
+    public ProfileEntity toEntity(ProfileDTO profileDTO) {
+        return ProfileEntity.builder()
                 .id(profileDTO.getId())
                 .fullName(profileDTO.getFullName())
                 .email(profileDTO.getEmail())
@@ -50,10 +42,9 @@ public class ProfileService
                 .build();
 
     }
-// Helper Method
+    // Helper Method
 
-   public ProfileDTO toDTO(ProfileEntity profileEntity) 
-   {
+    public ProfileDTO toDTO(ProfileEntity profileEntity) {
         return ProfileDTO.builder()
                 .id(profileEntity.getId())
                 .fullName(profileEntity.getFullName())
@@ -63,7 +54,5 @@ public class ProfileService
                 .updatedAt(profileEntity.getUpdatedAt())
                 .build();
     }
-
-
 
 }

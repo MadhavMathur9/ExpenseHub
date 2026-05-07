@@ -15,27 +15,20 @@ import lombok.RequiredArgsConstructor;
 public class ProfileController {
 
     private final ProfileService profileService;
-    
-//Handler Method for Registration
 
-     @PostMapping("/register")
+    // Handler Method for Registration
+
+    @PostMapping("/register")
     public ResponseEntity<ProfileDTO> registerProfile(@RequestBody ProfileDTO profileDTO) {
         ProfileDTO registeredProfile = profileService.registerProfile(profileDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredProfile);
 
     }
 
-//Handler Method for activation
+    // Handler Method for activation
 
+    // Handler Method for login
 
-
-//Handler Method for login
-
-
-
-//Handler Method for Profile
-
-
-
+    // Handler Method for Profile
 
 }
