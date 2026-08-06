@@ -35,10 +35,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             try {
+                // We only extract the username if it's our custom HS256 JWT
+                // Keycloak RS256 JWTs will fail to parse here and fall through to the oauth2ResourceServer
                 username = jwtUtil.extractUsername(jwt);
             } catch (Exception e) {
-                // Token invalid or expired
-                logger.warn("JWT token parsing failed: " + e.getMessage());
+                // Token is either invalid, expired, or an RS256 Keycloak token
+                // We just log at TRACE level so we don't spam the logs for every Keycloak SSO request
+                logger.trace("Custom JWT token parsing skipped/failed (likely a Keycloak token): " + e.getMessage());
             }
         }
 
