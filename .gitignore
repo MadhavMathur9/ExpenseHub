@@ -38,10 +38,8 @@ frontend/.vite/
 *.cer
 
 # Spring Boot Configuration (contains credentials - never commit with real values)
-**/src/main/resources/application.properties
-**/src/main/resources/application*.properties
-**/src/main/resources/application*.yml
-**/src/main/resources/application*.yaml
+**/src/main/resources/application-local.properties
+**/src/main/resources/application-secret.properties
 
 # Docker override & secret files
 docker-compose.override.yml
