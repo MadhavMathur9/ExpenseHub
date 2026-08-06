@@ -13,4 +13,6 @@ public interface MilestoneRepository extends JpaRepository<MilestoneEntity, Long
     List<MilestoneEntity> findByProfileIdOrderByCreatedAtAsc(Long profileId);
 
     Optional<MilestoneEntity> findByIdAndProfileId(Long id, Long profileId);
+
+    void deleteByProfileId(Long profileId);
 }

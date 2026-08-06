@@ -133,6 +133,7 @@ export const api = {
   // Profile
   getMe: () => apiCall<UserProfile>('/me'),
   updateMe: (data: any) => apiCall('/me', 'PUT', data),
+  deleteMe: () => apiCall('/me', 'DELETE'),
 
   // Dashboard & Transactions
   getDashboard: () => apiCall<DashboardData>('/api/dashboard'),

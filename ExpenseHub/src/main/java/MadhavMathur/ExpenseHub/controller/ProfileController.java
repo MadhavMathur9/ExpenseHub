@@ -52,6 +52,20 @@ public class ProfileController {
         return ResponseEntity.ok(updated);
     }
 
+    @DeleteMapping("/me")
+    public ResponseEntity<?> deleteCurrentUser(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        try {
+            profileService.deleteAccount(principal.getName());
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(java.util.Map.of("message", "Failed to delete account: " + e.getMessage()));
+        }
+    }
+
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody java.util.Map<String, String> body) {
         String email = body.get("email");

@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
     List<CategoryEntity> findByProfileId(Long profileId);
     Optional<CategoryEntity> findByNameAndProfileId(String name, Long profileId);
+    void deleteByProfileId(Long profileId);
 }

@@ -21,4 +21,6 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long> {
 
     @Query("SELECT COALESCE(SUM(e.amount), 0) FROM ExpenseEntity e WHERE e.profile.id = :profileId AND e.date BETWEEN :start AND :end")
     BigDecimal sumAmountByProfileIdAndDateBetween(@Param("profileId") Long profileId, @Param("start") LocalDate start, @Param("end") LocalDate end);
+
+    void deleteByProfileId(Long profileId);
 }

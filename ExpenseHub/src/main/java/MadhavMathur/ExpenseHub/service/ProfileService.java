@@ -3,6 +3,10 @@ package MadhavMathur.ExpenseHub.service;
 import MadhavMathur.ExpenseHub.dto.AuthDTO;
 import MadhavMathur.ExpenseHub.dto.ProfileDTO;
 import MadhavMathur.ExpenseHub.entity.ProfileEntity;
+import MadhavMathur.ExpenseHub.repository.CategoryRepository;
+import MadhavMathur.ExpenseHub.repository.ExpenseRepository;
+import MadhavMathur.ExpenseHub.repository.IncomeRepository;
+import MadhavMathur.ExpenseHub.repository.MilestoneRepository;
 import MadhavMathur.ExpenseHub.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,10 @@ public class ProfileService {
     private final EmailService emailService;
     private final CategoryService categoryService;
     private final KeycloakAuthService keycloakAuthService;
+    private final ExpenseRepository expenseRepository;
+    private final IncomeRepository incomeRepository;
+    private final MilestoneRepository milestoneRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional
     public ProfileDTO registerProfile(ProfileDTO profileDTO) {
@@ -102,6 +110,23 @@ public class ProfileService {
         profile.setResetPasswordToken(null);
         profileRepository.save(profile);
         return true;
+    }
+
+    @Transactional
+    public void deleteAccount(String email) {
+        ProfileEntity profile = profileRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Long profileId = profile.getId();
+
+        // Delete all child records in correct order to avoid FK constraint violations
+        expenseRepository.deleteByProfileId(profileId);
+        incomeRepository.deleteByProfileId(profileId);
+        milestoneRepository.deleteByProfileId(profileId);
+        categoryRepository.deleteByProfileId(profileId);
+        profileRepository.delete(profile);
+
+        // Remove from Keycloak so the user cannot log back in
+        keycloakAuthService.deleteUser(email);
     }
 
     public ProfileEntity toEntity(ProfileDTO profileDTO) {

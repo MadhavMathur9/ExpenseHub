@@ -250,6 +250,30 @@ public class KeycloakAuthService {
 
     // ─── Internal Helpers ──────────────────────────────────────────────
 
+    /**
+     * Delete a user from Keycloak via the Admin REST API.
+     */
+    public void deleteUser(String email) {
+        String adminToken = getAdminAccessToken();
+        String userId = getUserIdByEmail(email, adminToken);
+
+        if (userId == null) {
+            log.warn("Cannot delete Keycloak user: user not found for email {}", email);
+            return; // Not fatal — local data is already gone
+        }
+
+        String deleteUrl = keycloakUrl + "/admin/realms/" + realm + "/users/" + userId;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(adminToken);
+
+        try {
+            restTemplate.exchange(deleteUrl, HttpMethod.DELETE, new HttpEntity<>(headers), String.class);
+            log.info("Keycloak user deleted for: {}", email);
+        } catch (Exception e) {
+            log.warn("Failed to delete Keycloak user for {}: {}", email, e.getMessage());
+        }
+    }
+
     private String getAdminAccessToken() {
         String tokenUrl = keycloakUrl + "/realms/master/protocol/openid-connect/token";
 
