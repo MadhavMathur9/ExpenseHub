@@ -76,6 +76,9 @@ public class ProfileService {
         if (dto.getProfileImageUrl() != null) {
             profile.setProfileImageUrl(dto.getProfileImageUrl());
         }
+        if (dto.getCurrency() != null && !dto.getCurrency().isBlank()) {
+            profile.setCurrency(dto.getCurrency());
+        }
         
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             // Update password in Keycloak
@@ -135,6 +138,7 @@ public class ProfileService {
                 .fullName(profileDTO.getFullName())
                 .email(profileDTO.getEmail())
                 .profileImageUrl(profileDTO.getProfileImageUrl())
+                .currency(profileDTO.getCurrency() != null && !profileDTO.getCurrency().isBlank() ? profileDTO.getCurrency() : "USD")
                 .build();
     }
 
@@ -144,6 +148,7 @@ public class ProfileService {
                 .fullName(profileEntity.getFullName())
                 .email(profileEntity.getEmail())
                 .profileImageUrl(profileEntity.getProfileImageUrl())
+                .currency(profileEntity.getCurrency() != null && !profileEntity.getCurrency().isBlank() ? profileEntity.getCurrency() : "USD")
                 .createdAt(profileEntity.getCreatedAt())
                 .updatedAt(profileEntity.getUpdatedAt())
                 .build();

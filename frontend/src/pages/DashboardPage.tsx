@@ -5,7 +5,8 @@ import ReactMarkdown from 'react-markdown';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../api/client';
 import type { DashboardData, SavingsData } from '../api/client';
-import { formatCurrency, formatDate } from '../lib/utils';
+import { formatDate } from '../lib/utils';
+import { useCurrency } from '../context/CurrencyContext';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -20,6 +21,7 @@ const CHART_PALETTE = [
 ];
 
 export function DashboardPage() {
+  const { formatCurrency } = useCurrency();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

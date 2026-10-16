@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { api } from '../api/client';
 import type { Milestone, MilestonePayload } from '../api/client';
-import { formatCurrency } from '../lib/utils';
+import { useCurrency } from '../context/CurrencyContext';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input, Label } from '../components/ui/Input';
@@ -50,6 +50,7 @@ interface GoalModalProps {
 }
 
 function GoalModal({ initial, onClose, onSuccess }: GoalModalProps) {
+  const { currencySymbol } = useCurrency();
   const isEdit = Boolean(initial);
   const [title, setTitle] = useState(initial?.title ?? '');
   const [icon, setIcon] = useState(initial?.icon ?? 'target');
@@ -150,7 +151,7 @@ function GoalModal({ initial, onClose, onSuccess }: GoalModalProps) {
 
           {/* Target amount */}
           <div>
-            <Label htmlFor="goal-amount">Target amount</Label>
+            <Label htmlFor="goal-amount">Target amount ({currencySymbol})</Label>
             <Input
               id="goal-amount"
               type="number"
@@ -193,6 +194,7 @@ function GoalModal({ initial, onClose, onSuccess }: GoalModalProps) {
 
 // ─── Main Goals Page ──────────────────────────────────────────────────────────
 export function GoalsPage() {
+  const { formatCurrency } = useCurrency();
   const [period, setPeriod] = useState<Period>('quarterly');
   const [savings, setSavings] = useState<{
     savings: number;

@@ -41,12 +41,17 @@ public class ProfileEntity {
     private Boolean isActive;
     private String activationToken;
     private String resetPasswordToken;
+    @Builder.Default
+    private String currency = "USD";
 
     @PrePersist
     public void prePersist() {
 
         if (this.isActive == null) {
             this.isActive = false;
+        }
+        if (this.currency == null || this.currency.isBlank()) {
+            this.currency = "USD";
         }
     }
 }

@@ -1,18 +1,23 @@
 import type { FormEvent } from 'react';
 import { useState, useEffect } from 'react';
-import { User, Mail, Lock, Image, CheckCircle2, Trash2, AlertTriangle } from 'lucide-react';
+import { User, Mail, Lock, Image, CheckCircle2, Trash2, AlertTriangle, Coins } from 'lucide-react';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useCurrency } from '../context/CurrencyContext';
+import { formatCurrencyWithCode, type CurrencyCode } from '../lib/currencies';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { Input, Label } from '../components/ui/Input';
+import { Input, Select, Label } from '../components/ui/Input';
+import { CountryFlag } from '../components/ui/CountryFlag';
 
 export function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
+  const { currency, setCurrency, currencies } = useCurrency();
 
   const [fullName, setFullName] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>(currency);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
@@ -26,6 +31,9 @@ export function ProfilePage() {
     if (user) {
       setFullName(user.fullName || '');
       setProfileImageUrl(user.profileImageUrl || '');
+      if (user.currency) {
+        setSelectedCurrency(user.currency as CurrencyCode);
+      }
     }
   }, [user]);
 
@@ -34,11 +42,16 @@ export function ProfilePage() {
     setLoading(true);
     setMessage(null);
 
-    const payload: any = { fullName, profileImageUrl: profileImageUrl || null };
+    const payload: any = {
+      fullName,
+      profileImageUrl: profileImageUrl || null,
+      currency: selectedCurrency,
+    };
     if (password) payload.password = password;
 
     try {
       await api.updateMe(payload);
+      setCurrency(selectedCurrency);
       await refreshUser();
       setPassword('');
       setMessage({ text: 'Profile updated successfully.', type: 'success' });
@@ -135,6 +148,43 @@ export function ProfilePage() {
                   <Mail className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
                 </div>
                 <p className="text-[11px] text-text-tertiary mt-1">Email address cannot be changed.</p>
+              </div>
+
+              <div>
+                <Label htmlFor="profile-currency" className="flex items-center gap-1.5">
+                  <Coins className="w-3.5 h-3.5 text-accent" />
+                  <span>Preferred Currency</span>
+                </Label>
+                <div className="mt-1">
+                  <Select
+                    id="profile-currency"
+                    value={selectedCurrency}
+                    onChange={(val) => setSelectedCurrency(val as CurrencyCode)}
+                    options={currencies.map((c) => ({
+                      value: c.code,
+                      label: (
+                        <span className="flex items-center gap-2.5">
+                          <CountryFlag countryCode={c.countryCode} alt={c.name} />
+                          <span className="font-semibold text-text-primary tracking-wide">{c.code}</span>
+                          <span className="text-text-tertiary font-mono">({c.symbol})</span>
+                          <span className="text-text-secondary truncate">— {c.name}</span>
+                        </span>
+                      ),
+                    }))}
+                  />
+                </div>
+                <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-[11px] text-text-tertiary">
+                  <span>Used across your dashboard, transactions, milestone goals, and AI insights.</span>
+                  <span className="inline-flex items-center gap-2 font-mono text-text-primary bg-[#FAF8F5] border border-[#DDD9D0] px-2.5 py-1 rounded text-[11px] shrink-0 self-start sm:self-auto">
+                    <CountryFlag
+                      countryCode={currencies.find((c) => c.code === selectedCurrency)?.countryCode || 'us'}
+                      className="w-4 h-3"
+                    />
+                    <span>
+                      Live Preview: <strong>{formatCurrencyWithCode(12500, selectedCurrency)}</strong>
+                    </span>
+                  </span>
+                </div>
               </div>
 
               <div>

@@ -6,9 +6,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/** Format a number as USD currency, e.g. $1,234.56 */
-export function formatCurrency(val: number): string {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+import { formatCurrencyWithCode, getStoredCurrency, type CurrencyCode } from './currencies';
+
+/** Format a number using the active or specified currency */
+export function formatCurrency(val: number, currencyCode?: CurrencyCode | string): string {
+  const code = currencyCode || getStoredCurrency();
+  return formatCurrencyWithCode(val, code);
 }
 
 /** Format an ISO date string as dd/MM/yyyy, returns '—' for empty input */

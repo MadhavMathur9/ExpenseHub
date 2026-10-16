@@ -8,6 +8,7 @@ import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Input, Select, Label } from '../ui/Input';
 import { DatePicker } from '../ui/DatePicker';
+import { useCurrency } from '../../context/CurrencyContext';
 
 interface TransactionModalProps {
   mode: 'INCOME' | 'EXPENSE' | null;
@@ -17,6 +18,7 @@ interface TransactionModalProps {
 }
 
 export function TransactionModal({ mode, initialData, onClose, onSuccess }: TransactionModalProps) {
+  const { currencySymbol } = useCurrency();
   const [categories, setCategories] = useState<Category[]>([]);
   const [txName, setTxName] = useState('');
   const [txAmount, setTxAmount] = useState('');
@@ -131,7 +133,7 @@ export function TransactionModal({ mode, initialData, onClose, onSuccess }: Tran
           </div>
 
           <div>
-            <Label htmlFor="modal-tx-amount">Amount ($)</Label>
+            <Label htmlFor="modal-tx-amount">Amount ({currencySymbol})</Label>
             <Input
               id="modal-tx-amount"
               type="number"

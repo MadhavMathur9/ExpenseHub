@@ -5,6 +5,7 @@ export interface UserProfile {
   fullName: string;
   email: string;
   profileImageUrl: string;
+  currency?: string;
 }
 
 export interface Transaction {

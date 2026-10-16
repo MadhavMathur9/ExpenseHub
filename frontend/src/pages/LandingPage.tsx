@@ -20,7 +20,8 @@ import {
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import ReactMarkdown from 'react-markdown';
 import { motion, useReducedMotion } from 'framer-motion';
-import { formatCurrency, formatDate } from '../lib/utils';
+import { formatDate } from '../lib/utils';
+import { useCurrency } from '../context/CurrencyContext';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { AnimatedNumber } from '../components/ui/AnimatedNumber';
@@ -67,6 +68,7 @@ const EXTRA_EXPENSES: { name: string; category: string; amount: number }[] = [
 ];
 
 export function LandingPage() {
+  const { formatCurrency } = useCurrency();
   const shouldReduceMotion = useReducedMotion();
 
   // Sticky navbar subtle elevation on scroll (Mercury style)
@@ -604,7 +606,7 @@ export function LandingPage() {
                         </div>
                         <div className="text-right shrink-0 font-mono tabular-nums">
                           <p className="text-[13px] font-medium text-[#22221F]">
-                            <AnimatedNumber value={45000} format={formatCurrency} /> / $100,000
+                            <AnimatedNumber value={45000} format={formatCurrency} /> / {formatCurrency(100000)}
                           </p>
                           <p className="text-[11px] text-[#68675F]">
                             <AnimatedNumber value={45.0} decimals={1} suffix="%" />
@@ -647,7 +649,7 @@ export function LandingPage() {
                         </div>
                         <div className="text-right shrink-0 font-mono tabular-nums">
                           <p className="text-[13px] font-medium text-[#22221F]">
-                            <AnimatedNumber value={15000} format={formatCurrency} /> / $15,000
+                            <AnimatedNumber value={15000} format={formatCurrency} /> / {formatCurrency(15000)}
                           </p>
                           <p className="text-[11px] text-[#1A7F4E] font-medium">
                             <AnimatedNumber value={100.0} decimals={1} suffix="%" />
@@ -685,7 +687,7 @@ export function LandingPage() {
                         </div>
                         <div className="text-right shrink-0 font-mono tabular-nums">
                           <p className="text-[13px] font-medium text-[#22221F]">
-                            <AnimatedNumber value={4200} format={formatCurrency} /> / $6,000
+                            <AnimatedNumber value={4200} format={formatCurrency} /> / {formatCurrency(6000)}
                           </p>
                           <p className="text-[11px] text-[#68675F]">
                             <AnimatedNumber value={70.0} decimals={1} suffix="%" />
@@ -1036,7 +1038,7 @@ export function LandingPage() {
                           <td className="py-2.5 px-3 font-medium text-[#22221F]">1 week Japan flights</td>
                           <td className="py-2.5 px-3"><Badge>Travel</Badge></td>
                           <td className="py-2.5 px-3 font-mono tabular-nums text-[#68675F]">20/09/2026</td>
-                          <td className="py-2.5 px-3 text-right font-mono tabular-nums text-[#B91C1C]">−$10,000.00</td>
+                          <td className="py-2.5 px-3 text-right font-mono tabular-nums text-[#B91C1C]">−{formatCurrency(10000)}</td>
                         </tr>
                       </tbody>
                     </table>

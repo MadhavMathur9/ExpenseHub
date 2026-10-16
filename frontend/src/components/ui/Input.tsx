@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, TextareaHTMLAttributes, LabelHTMLAttributes } from 'react';
+import type { InputHTMLAttributes, TextareaHTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react';
 import { forwardRef, Fragment } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 import { Listbox, Transition } from '@headlessui/react';
@@ -24,7 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 
 export interface SelectOption {
-  label: string;
+  label: ReactNode;
   value: string;
 }
 
@@ -63,7 +63,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 px-3 rounded-lg transition-colors ${
+                    `relative cursor-default select-none py-2 pl-3 pr-8 rounded-lg transition-colors ${
                       active ? 'bg-accent-subtle text-accent' : 'text-text-primary'
                     }`
                   }

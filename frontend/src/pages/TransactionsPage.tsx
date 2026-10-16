@@ -2,7 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { Plus, Download, Trash2, Pencil, Search, RefreshCw } from 'lucide-react';
 import { api } from '../api/client';
 import type { Transaction, Category, FilterParams } from '../api/client';
-import { formatCurrency, formatDate } from '../lib/utils';
+import { formatDate } from '../lib/utils';
+import { useCurrency } from '../context/CurrencyContext';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -11,6 +12,7 @@ import { DateRangeFilter } from '../components/DateRangeFilter';
 import { TransactionModal } from '../components/modals/TransactionModal';
 
 export function TransactionsPage() {
+  const { formatCurrency } = useCurrency();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);

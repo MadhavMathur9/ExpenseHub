@@ -19,6 +19,7 @@ public class ProfileDTO {
     private String email;
     private String password;
     private String profileImageUrl;
+    private String currency;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
