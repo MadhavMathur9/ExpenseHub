@@ -7,20 +7,22 @@
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "Geist Mono", "IBM Plex Mono", monospace;
   
-  /* Legacy ExpenseHub Colors */
-  --color-bg: #FAFAF9;
+  /* ExpenseHub Modern Warm Fintech Colors */
+  --color-bg: #F6F5F2;
+  --color-canvas: #F6F5F2;
   --color-surface: #FFFFFF;
   --color-border: var(--border);
-  --color-border-strong: #DCDCD9;
-  --color-text-primary: #0A0A0A;
-  --color-text-secondary: #6B6B68;
-  --color-text-tertiary: #9C9C98;
-  --color-accent: #1A5F3F;
+  --color-border-strong: #DEDDD6;
+  --color-hairline: #DEDDD6;
+  --color-text-primary: #22221F;
+  --color-text-secondary: #68675F;
+  --color-text-tertiary: #9C9B92;
+  --color-accent: #1B5E3F;
   --color-accent-hover: #164F34;
   --color-accent-subtle: #EAF3EE;
   --color-positive: #1A7F4E;
-  --color-negative: #C4453D;
-  --color-hover-row: #F5F5F4;
+  --color-negative: #B91C1C;
+  --color-hover-row: #FAF8F5;
 
   /* Shadcn UI Default Colors */
   --color-card: var(--card);
@@ -46,25 +48,25 @@
 }
 
 :root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(0 0% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(0 0% 3.9%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(0 0% 3.9%);
-  --primary: hsl(152 57% 24%); /* ExpenseHub accent */
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(0 0% 96.1%);
-  --secondary-foreground: hsl(0 0% 9%);
-  --muted: hsl(0 0% 96.1%);
-  --muted-foreground: hsl(0 0% 45.1%);
-  --accent: hsl(0 0% 96.1%);
-  --accent-foreground: hsl(0 0% 9%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(0 0% 89.8%);
-  --input: hsl(0 0% 89.8%);
-  --ring: hsl(152 57% 24%);
+  --background: #F6F5F2;
+  --foreground: #22221F;
+  --card: #FFFFFF;
+  --card-foreground: #22221F;
+  --popover: #FFFFFF;
+  --popover-foreground: #22221F;
+  --primary: #1B5E3F;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FAF8F5;
+  --secondary-foreground: #22221F;
+  --muted: #FAF8F5;
+  --muted-foreground: #68675F;
+  --accent: #EAF3EE;
+  --accent-foreground: #1B5E3F;
+  --destructive: #B91C1C;
+  --destructive-foreground: #FFFFFF;
+  --border: #DEDDD6;
+  --input: #DEDDD6;
+  --ring: #1B5E3F;
   --radius: 0.5rem;
 }
 
@@ -75,7 +77,7 @@
   --card-foreground: hsl(0 0% 98%);
   --popover: hsl(0 0% 3.9%);
   --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(152 57% 24%);
+  --primary: #1B5E3F;
   --primary-foreground: hsl(0 0% 9%);
   --secondary: hsl(0 0% 14.9%);
   --secondary-foreground: hsl(0 0% 98%);
@@ -87,7 +89,7 @@
   --destructive-foreground: hsl(0 0% 98%);
   --border: hsl(0 0% 14.9%);
   --input: hsl(0 0% 14.9%);
-  --ring: hsl(152 57% 24%);
+  --ring: #1B5E3F;
 }
 
 @layer base {
@@ -96,6 +98,15 @@
   }
   body {
     @apply bg-bg text-text-primary font-sans antialiased;
+  }
+  ::placeholder {
+    color: #9C9B92 !important;
+    opacity: 1;
+  }
+  input:read-only, input:disabled {
+    background-color: #FAF8F5;
+    color: #22221F;
+    border-color: #DEDDD6;
   }
   .tabular-nums {
     font-feature-settings: "tnum";
@@ -109,5 +120,93 @@
   }
   .fin-focus {
     @apply focus:outline-none focus:ring-2 focus:ring-accent-subtle focus:border-accent;
+  }
+}
+
+/* ─── Showcase Container Organic Wandering Gradient ─── */
+@keyframes showcaseGradientWanderCW {
+  0% {
+    background-position: 0% 0%;
+  }
+  20% {
+    background-position: 95% 15%;
+  }
+  40% {
+    background-position: 100% 90%;
+  }
+  60% {
+    background-position: 25% 100%;
+  }
+  80% {
+    background-position: 5% 45%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes showcaseGradientWanderCCW {
+  0% {
+    background-position: 100% 100%;
+  }
+  20% {
+    background-position: 15% 90%;
+  }
+  40% {
+    background-position: 0% 20%;
+  }
+  60% {
+    background-position: 80% 5%;
+  }
+  80% {
+    background-position: 95% 60%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes showcaseCloudDrift {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(3%, -4%, 0) scale(1.04);
+  }
+  66% {
+    transform: translate3d(-2%, 4%, 0) scale(0.97);
+  }
+  100% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+}
+
+.showcase-flow-cw {
+  animation: showcaseGradientWanderCW var(--showcase-duration, 20s) ease-in-out infinite;
+  animation-delay: var(--showcase-delay, 0s);
+  background-size: 260% 260% !important;
+  will-change: background-position;
+}
+
+.showcase-flow-ccw {
+  animation: showcaseGradientWanderCCW var(--showcase-duration, 20s) ease-in-out infinite;
+  animation-delay: var(--showcase-delay, 0s);
+  background-size: 260% 260% !important;
+  will-change: background-position;
+}
+
+.showcase-cloud-drift {
+  animation: showcaseCloudDrift calc(var(--showcase-duration, 20s) * 1.25) ease-in-out infinite;
+  animation-delay: calc(var(--showcase-delay, 0s) - 4s);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-flow-cw,
+  .showcase-flow-ccw,
+  .showcase-cloud-drift {
+    animation: none !important;
+    background-position: 50% 50% !important;
+    transform: none !important;
   }
 }

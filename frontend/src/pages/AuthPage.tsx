@@ -32,6 +32,12 @@ export function AuthPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (searchParams.get('mode') === 'register') {
+      setIsLogin(false);
+    } else if (searchParams.get('mode') === 'login') {
+      setIsLogin(true);
+    }
+
     if (searchParams.has('activated')) {
       const ok = searchParams.get('activated') === 'true';
       setActivationStatus({ ok, msg: searchParams.get('error') || undefined });
@@ -76,7 +82,7 @@ export function AuthPage() {
     setMessage(null);
     try {
       await api.register({ fullName, email, password, profileImageUrl: profileImageUrl || undefined });
-      setMessage({ text: 'Account created. Please check your email to activate your account.', type: 'success' });
+      setMessage({ text: 'Account created successfully! You can now sign in.', type: 'success' });
       setIsLogin(true);
     } catch (err: any) {
       setMessage({ text: err.message || 'Registration failed.', type: 'error' });
@@ -158,7 +164,7 @@ export function AuthPage() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder=""
                   required
                   className="pl-9"
                 />
@@ -239,7 +245,7 @@ export function AuthPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder=""
                   required
                   className="pl-9"
                 />
@@ -338,7 +344,7 @@ export function AuthPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder=""
                   required
                   className="pl-9"
                 />

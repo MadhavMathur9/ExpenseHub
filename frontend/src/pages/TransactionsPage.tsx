@@ -26,6 +26,10 @@ export function TransactionsPage() {
     sortOrder: 'desc',
   });
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   // Modal State
   const [modalMode, setModalMode] = useState<'INCOME' | 'EXPENSE' | null>(null);
   const [editingTx, setEditingTx] = useState<Transaction | null>(null);
@@ -57,6 +61,7 @@ export function TransactionsPage() {
 
   useEffect(() => {
     fetchFilteredTransactions();
+    setCurrentPage(1);
   }, [fetchFilteredTransactions]);
 
   const handleExport = async () => {
@@ -254,71 +259,132 @@ export function TransactionsPage() {
                 <th className="py-3 px-4">Description</th>
                 <th className="py-3 px-4">Category</th>
                 <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Type</th>
                 <th className="py-3 px-4 text-right">Amount</th>
-                <th className="py-3 px-4 text-center w-24">Actions</th>
+                <th className="py-3 px-4 text-center w-28">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {loading ? (
-                <tr>
-                  <td colSpan={6} className="py-12 text-center text-text-tertiary">
-                    Loading transactions...
-                  </td>
-                </tr>
+                Array.from({ length: 6 }).map((_, idx) => (
+                  <tr key={`tx-skeleton-${idx}`} className="animate-pulse">
+                    <td className="py-3.5 px-4"><div className="h-4 bg-[#EDEAE4] rounded w-36" /></td>
+                    <td className="py-3.5 px-4"><div className="h-5 bg-[#EDEAE4] rounded-full w-20" /></td>
+                    <td className="py-3.5 px-4"><div className="h-4 bg-[#EDEAE4] rounded w-24" /></td>
+                    <td className="py-3.5 px-4 text-right"><div className="h-4 bg-[#EDEAE4] rounded w-20 ml-auto" /></td>
+                    <td className="py-3.5 px-4 text-center"><div className="h-8 bg-[#EDEAE4] rounded w-20 mx-auto" /></td>
+                  </tr>
+                ))
               ) : transactions.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-text-tertiary">
+                  <td colSpan={5} className="py-12 text-center text-text-tertiary">
                     No transactions match the selected criteria.
                   </td>
                 </tr>
               ) : (
-                transactions.map((tx) => {
-                  const isIncome = tx.type === 'INCOME';
-                  return (
-                    <tr key={tx.id} className="hover:bg-hover-row transition-colors">
-                      <td className="py-3.5 px-4 font-medium text-text-primary">{tx.name}</td>
-                      <td className="py-3.5 px-4">
-                        <Badge>{getCategoryName(tx.categoryId, tx.categoryName)}</Badge>
-                      </td>
-                      <td className="py-3.5 px-4 text-text-secondary font-mono tabular-nums">
-                        {formatDate(tx.date)}
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <Badge dotColor={isIncome ? '#1A7F4E' : '#6B6B68'}>{tx.type}</Badge>
-                      </td>
-                      <td
-                        className={`py-3.5 px-4 text-right font-mono tabular-nums font-medium ${
-                          isIncome ? 'text-positive' : 'text-negative'
-                        }`}
-                      >
-                        {isIncome ? '+' : '−'}{formatCurrency(tx.amount)}
-                      </td>
-                      <td className="py-3.5 px-4 text-center">
-                        <div className="flex items-center justify-center space-x-1">
-                          <button
-                            onClick={() => handleOpenEdit(tx)}
-                            className="p-1 text-text-tertiary hover:text-accent rounded transition-colors cursor-pointer"
-                            title="Edit transaction"
-                          >
-                            <Pencil className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(tx.id, tx.type)}
-                            className="p-1 text-text-tertiary hover:text-negative rounded transition-colors cursor-pointer"
-                            title="Delete transaction"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
+                transactions
+                  .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+                  .map((tx) => {
+                    const isIncome = tx.type === 'INCOME';
+                    return (
+                      <tr key={tx.id} className="hover:bg-hover-row transition-colors">
+                        <td className="py-3.5 px-4 font-medium text-text-primary">{tx.name}</td>
+                        <td className="py-3.5 px-4">
+                          <Badge>{getCategoryName(tx.categoryId, tx.categoryName)}</Badge>
+                        </td>
+                        <td className="py-3.5 px-4 text-text-secondary font-mono tabular-nums">
+                          {formatDate(tx.date)}
+                        </td>
+                        <td
+                          className={`py-3.5 px-4 text-right font-mono tabular-nums font-medium ${
+                            isIncome ? 'text-positive' : 'text-negative'
+                          }`}
+                        >
+                          {isIncome ? '+' : '−'}{formatCurrency(tx.amount)}
+                        </td>
+                        <td className="py-3.5 px-4 text-center">
+                          <div className="flex items-center justify-center space-x-1">
+                            <button
+                              onClick={() => handleOpenEdit(tx)}
+                              className="w-9 h-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-hover-row rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                              title="Edit transaction"
+                              aria-label="Edit transaction"
+                            >
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(tx.id, tx.type)}
+                              className="w-9 h-9 flex items-center justify-center text-text-secondary hover:text-negative hover:bg-red-50 rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                              title="Delete transaction"
+                              aria-label="Delete transaction"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
               )}
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Footer */}
+        {!loading && transactions.length > 0 && (
+          <div className="flex flex-col sm:flex-row items-center justify-between px-4 py-3 border-t border-border bg-surface text-xs text-text-secondary gap-3">
+            <div>
+              Showing{' '}
+              <span className="font-medium text-text-primary font-mono">
+                {(currentPage - 1) * pageSize + 1}
+              </span>{' '}
+              to{' '}
+              <span className="font-medium text-text-primary font-mono">
+                {Math.min(currentPage * pageSize, transactions.length)}
+              </span>{' '}
+              of{' '}
+              <span className="font-medium text-text-primary font-mono">
+                {transactions.length}
+              </span>{' '}
+              transactions
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-1.5">
+                <span>Rows per page:</span>
+                <select
+                  value={pageSize}
+                  onChange={(e) => {
+                    setPageSize(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="bg-transparent border border-border rounded px-2 py-1 text-xs font-medium text-text-primary focus:outline-none focus:border-accent cursor-pointer"
+                >
+                  <option value={10}>10</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
+              <div className="flex items-center space-x-1">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage <= 1}
+                  className="px-2.5 py-1 rounded border border-border text-xs font-medium text-text-primary hover:bg-hover-row disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                >
+                  Previous
+                </button>
+                <span className="px-2 text-xs font-mono text-text-secondary">
+                  {currentPage} / {Math.max(1, Math.ceil(transactions.length / pageSize))}
+                </span>
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(Math.ceil(transactions.length / pageSize), p + 1))}
+                  disabled={currentPage >= Math.ceil(transactions.length / pageSize)}
+                  className="px-2.5 py-1 rounded border border-border text-xs font-medium text-text-primary hover:bg-hover-row disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </Card>
 
       {/* Shared Transaction Modal */}

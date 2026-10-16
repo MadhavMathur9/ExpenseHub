@@ -12,12 +12,11 @@ import { Button } from '../components/ui/Button';
 import { TransactionModal } from '../components/modals/TransactionModal';
 
 const CHART_PALETTE = [
-  '#1A5F3F', // --accent (dominant)
-  '#4A7A60', // green-gray step 1
-  '#7A9F8A', // green-gray step 2
-  '#9C9C98', // --text-tertiary
-  '#BDBDBA',
-  '#CCCCCC',
+  '#1B5E3F', // emerald
+  '#334155', // slate
+  '#0F766E', // teal
+  '#B45309', // ochre
+  '#475569', // stone
 ];
 
 export function DashboardPage() {
@@ -236,12 +235,16 @@ export function DashboardPage() {
           <div>
             <p
               className={`text-2xl font-medium font-mono tabular-nums ${
-                (savings?.savings ?? 0) >= 0 ? 'text-positive' : 'text-negative'
+                (savings?.savings ?? 0) > 0
+                  ? 'text-positive'
+                  : (savings?.savings ?? 0) < 0
+                  ? 'text-negative'
+                  : 'text-text-primary'
               }`}
             >
-              {(savings?.savings ?? 0) >= 0 ? '+' : ''}{formatCurrency(savings?.savings ?? 0)}
+              {(savings?.savings ?? 0) > 0 ? '+' : ''}{formatCurrency(savings?.savings ?? 0)}
             </p>
-            {savings?.percentChange != null && (
+            {savings?.percentChange != null ? (
               <p
                 className={`flex items-center gap-1 text-[11px] font-medium font-mono tabular-nums mt-1 ${
                   savings.percentChange >= 0 ? 'text-positive' : 'text-negative'
@@ -251,6 +254,10 @@ export function DashboardPage() {
                   ? <TrendingUp className="w-3 h-3" />
                   : <TrendingDown className="w-3 h-3" />}
                 {savings.percentChange >= 0 ? '+' : ''}{savings.percentChange.toFixed(1)}% vs last {savingsPeriod === 'monthly' ? 'month' : savingsPeriod === 'quarterly' ? 'quarter' : savingsPeriod === 'yearly' ? 'year' : 'period'}
+              </p>
+            ) : (
+              <p className="text-[11px] text-text-tertiary mt-1">
+                Net income minus expenses for {savingsPeriod === 'monthly' ? 'this month' : savingsPeriod === 'quarterly' ? 'this quarter' : savingsPeriod === 'yearly' ? 'this year' : 'all recorded time'}
               </p>
             )}
           </div>
@@ -287,7 +294,7 @@ export function DashboardPage() {
                       startAngle={90}
                       endAngle={-270}
                       stroke="#FFFFFF"
-                      strokeWidth={3}
+                      strokeWidth={2}
                       onMouseEnter={(_, idx) => setActiveIndex(idx)}
                       onMouseLeave={() => setActiveIndex(null)}
                     >
@@ -369,7 +376,8 @@ export function DashboardPage() {
               disabled={loadingAdvisor}
               className="h-8 px-2.5 text-xs"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loadingAdvisor ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${loadingAdvisor ? 'animate-spin' : ''}`} />
+              Refresh
             </Button>
           </div>
 
@@ -404,14 +412,13 @@ export function DashboardPage() {
                 <th className="py-2.5 px-3">Description</th>
                 <th className="py-2.5 px-3">Category</th>
                 <th className="py-2.5 px-3">Date</th>
-                <th className="py-2.5 px-3">Type</th>
                 <th className="py-2.5 px-3 text-right">Amount</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {(!data?.recentTransactions || data.recentTransactions.length === 0) ? (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-text-tertiary">
+                  <td colSpan={4} className="py-8 text-center text-text-tertiary">
                     No recent transactions found.
                   </td>
                 </tr>
@@ -428,11 +435,6 @@ export function DashboardPage() {
                       </td>
                       <td className="py-3 px-3 text-text-secondary font-mono tabular-nums">
                         {formatDate(tx.date)}
-                      </td>
-                      <td className="py-3 px-3">
-                        <Badge dotColor={isIncome ? '#1A7F4E' : '#6B6B68'}>
-                          {tx.type}
-                        </Badge>
                       </td>
                       <td
                         className={`py-3 px-3 text-right font-mono tabular-nums font-medium ${

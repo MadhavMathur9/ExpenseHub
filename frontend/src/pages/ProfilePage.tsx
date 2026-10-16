@@ -69,132 +69,139 @@ export function ProfilePage() {
     : '';
 
   return (
-    <div className="max-w-2xl space-y-6">
+    <div className="space-y-6">
       <div>
         <h2 className="text-lg font-semibold text-text-primary">Account Settings</h2>
         <p className="text-xs text-text-secondary">Manage your personal profile and account credentials.</p>
       </div>
 
-      <Card className="p-6">
-        {/* User Overview Header */}
-        <div className="flex items-center space-x-4 pb-6 mb-6 border-b border-border">
-          <img
-            src={profileImageUrl || defaultAvatar}
-            alt={fullName}
-            className="w-16 h-16 rounded-full border border-border object-cover bg-hover-row"
-          />
-          <div>
-            <h3 className="font-semibold text-text-primary text-base">{user?.fullName}</h3>
-            <p className="text-xs text-text-secondary">{user?.email}</p>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          <Card className="p-6">
+            {/* User Overview Header */}
+            <div className="flex items-center space-x-4 pb-6 mb-6 border-b border-border">
+              <img
+                src={profileImageUrl || defaultAvatar}
+                alt={fullName}
+                className="w-16 h-16 rounded-full border border-border object-cover bg-hover-row"
+              />
+              <div>
+                <h3 className="font-semibold text-text-primary text-base">{user?.fullName}</h3>
+                <p className="text-xs text-text-secondary">{user?.email}</p>
+              </div>
+            </div>
+
+            {/* Success / Error Toast alert */}
+            {message && (
+              <div
+                className={`mb-6 p-3 rounded-[6px] text-xs border flex items-center space-x-2 ${
+                  message.type === 'success'
+                    ? 'bg-accent-subtle border-accent/20 text-accent'
+                    : 'bg-red-50 border-negative/20 text-negative'
+                }`}
+              >
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <span>{message.text}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="profile-fullName">Full Name</Label>
+                <div className="relative">
+                  <Input
+                    id="profile-fullName"
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                    className="pl-9"
+                  />
+                  <User className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="profile-email">Email Address</Label>
+                <div className="relative">
+                  <Input
+                    id="profile-email"
+                    type="email"
+                    value={user?.email || ''}
+                    disabled
+                    readOnly
+                    className="pl-9 bg-[#FAF8F5] text-[#22221F] border-[#DEDDD6] cursor-not-allowed"
+                  />
+                  <Mail className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
+                </div>
+                <p className="text-[11px] text-text-tertiary mt-1">Email address cannot be changed.</p>
+              </div>
+
+              <div>
+                <Label htmlFor="profile-avatar">Avatar Image URL</Label>
+                <div className="relative">
+                  <Input
+                    id="profile-avatar"
+                    type="url"
+                    placeholder="https://example.com/avatar.png"
+                    value={profileImageUrl}
+                    onChange={(e) => setProfileImageUrl(e.target.value)}
+                    className="pl-9"
+                  />
+                  <Image className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="profile-password">New Password</Label>
+                <div className="relative">
+                  <Input
+                    id="profile-password"
+                    type="password"
+                    placeholder="Leave blank to keep current password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-9"
+                  />
+                  <Lock className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <Button type="submit" disabled={loading}>
+                  {loading ? 'Saving...' : 'Save changes'}
+                </Button>
+              </div>
+            </form>
+          </Card>
         </div>
 
-        {/* Success / Error Toast alert */}
-        {message && (
-          <div
-            className={`mb-6 p-3 rounded-[6px] text-xs border flex items-center space-x-2 ${
-              message.type === 'success'
-                ? 'bg-accent-subtle border-accent/20 text-accent'
-                : 'bg-red-50 border-negative/20 text-negative'
-            }`}
-          >
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
-            <span>{message.text}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="profile-fullName">Full Name</Label>
-            <div className="relative">
-              <Input
-                id="profile-fullName"
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-                className="pl-9"
-              />
-              <User className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
+        {/* Danger Zone Column */}
+        <div className="lg:col-span-1 space-y-6">
+          <Card className="p-6 border border-red-200 dark:border-red-900/40">
+            <div className="flex items-start space-x-3">
+              <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                <AlertTriangle className="w-4 h-4 text-red-500" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-red-600 dark:text-red-400 text-sm">Danger Zone</h3>
+                <p className="text-xs text-text-secondary mt-1">
+                  Permanently delete your account and all associated data including transactions, categories, and goals.
+                  <strong className="text-text-primary"> This action cannot be undone.</strong>
+                </p>
+                <button
+                  id="delete-account-btn"
+                  onClick={() => { setShowDeleteModal(true); setDeleteConfirmText(''); setDeleteError(null); }}
+                  className="mt-3 flex items-center space-x-1.5 text-xs font-medium text-red-500 hover:text-red-600 border border-red-300 dark:border-red-700 hover:border-red-400 px-3 py-1.5 rounded-[6px] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-negative"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete my account</span>
+                </button>
+              </div>
             </div>
-          </div>
-
-          <div>
-            <Label htmlFor="profile-email">Email Address</Label>
-            <div className="relative">
-              <Input
-                id="profile-email"
-                type="email"
-                value={user?.email || ''}
-                disabled
-                className="pl-9 bg-hover-row cursor-not-allowed text-text-secondary"
-              />
-              <Mail className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
-            </div>
-            <p className="text-[11px] text-text-tertiary mt-1">Email address cannot be changed.</p>
-          </div>
-
-          <div>
-            <Label htmlFor="profile-avatar">Avatar Image URL</Label>
-            <div className="relative">
-              <Input
-                id="profile-avatar"
-                type="url"
-                placeholder="https://example.com/avatar.png"
-                value={profileImageUrl}
-                onChange={(e) => setProfileImageUrl(e.target.value)}
-                className="pl-9"
-              />
-              <Image className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
-            </div>
-          </div>
-
-          <div>
-            <Label htmlFor="profile-password">New Password (leave blank to keep current)</Label>
-            <div className="relative">
-              <Input
-                id="profile-password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pl-9"
-              />
-              <Lock className="w-4 h-4 text-text-tertiary absolute left-3 top-3" />
-            </div>
-          </div>
-
-          <div className="pt-2">
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Saving...' : 'Save changes'}
-            </Button>
-          </div>
-        </form>
-      </Card>
-
-      {/* Danger Zone */}
-      <Card className="p-6 border border-red-200 dark:border-red-900/40">
-        <div className="flex items-start space-x-3">
-          <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0 mt-0.5">
-            <AlertTriangle className="w-4 h-4 text-red-500" />
-          </div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-red-600 dark:text-red-400 text-sm">Danger Zone</h3>
-            <p className="text-xs text-text-secondary mt-1">
-              Permanently delete your account and all associated data including transactions, categories, and goals.
-              <strong className="text-text-primary"> This action cannot be undone.</strong>
-            </p>
-            <button
-              id="delete-account-btn"
-              onClick={() => { setShowDeleteModal(true); setDeleteConfirmText(''); setDeleteError(null); }}
-              className="mt-3 flex items-center space-x-1.5 text-xs font-medium text-red-500 hover:text-red-600 border border-red-300 dark:border-red-700 hover:border-red-400 px-3 py-1.5 rounded-[6px] transition-colors"
-            >
-              <Trash2 className="w-3.5 h-3.5" />
-              <span>Delete my account</span>
-            </button>
-          </div>
+          </Card>
         </div>
-      </Card>
+      </div>
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (

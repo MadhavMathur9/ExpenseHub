@@ -45,12 +45,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         <Listbox value={value} onChange={onChange}>
           <Listbox.Button
             className={cn(
-              'flex h-9 lg:h-10 w-full items-center justify-between rounded-lg border border-gray-200 bg-surface pl-3 pr-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/20 hover:border-emerald-500 hover:bg-gray-50 transition-colors cursor-default',
+              'flex h-9 lg:h-10 w-full items-center justify-between rounded-lg border border-border bg-surface pl-3 pr-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/20 hover:border-accent hover:bg-hover-row transition-colors cursor-default',
               className
             )}
           >
             <span className="block truncate">{selectedOption?.label || 'Select...'}</span>
-            <ChevronDown className="h-4 w-4 text-gray-400" aria-hidden="true" />
+            <ChevronDown className="h-4 w-4 text-text-secondary" aria-hidden="true" />
           </Listbox.Button>
           <Transition
             as={Fragment}
@@ -58,13 +58,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white p-1.5 text-base shadow-xl border border-gray-100 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-surface p-1.5 text-base shadow-xl border border-border ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {options.map((option, personIdx) => (
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 px-3 rounded-lg transition-colors ${
-                      active ? 'bg-emerald-50 text-emerald-900' : 'text-gray-700'
+                      active ? 'bg-accent-subtle text-accent' : 'text-text-primary'
                     }`
                   }
                   value={option.value}
@@ -79,7 +79,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
                         {option.label}
                       </span>
                       {selected ? (
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600">
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-accent">
                           <Check className="h-4 w-4" aria-hidden="true" />
                         </span>
                       ) : null}

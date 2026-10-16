@@ -136,10 +136,11 @@ export function CategoriesPage() {
                     </div>
                     <button
                       onClick={() => handleDeleteCategory(c.id)}
-                      className="p-1 text-text-tertiary hover:text-negative rounded transition-colors cursor-pointer"
+                      className="w-9 h-9 flex items-center justify-center text-text-secondary hover:text-negative hover:bg-red-50 rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                       title="Delete category"
+                      aria-label="Delete category"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 ))}
@@ -151,7 +152,7 @@ export function CategoriesPage() {
           <Card>
             <div className="flex items-center justify-between mb-3 border-b border-border pb-2.5">
               <div className="flex items-center space-x-2">
-                <Badge dotColor="#6B6B68">EXPENSE</Badge>
+                <Badge dotColor="#68675F">EXPENSE</Badge>
                 <span className="text-xs text-text-secondary font-medium">({expenseCategories.length})</span>
               </div>
             </div>
@@ -173,10 +174,11 @@ export function CategoriesPage() {
                     </div>
                     <button
                       onClick={() => handleDeleteCategory(c.id)}
-                      className="p-1 text-text-tertiary hover:text-negative rounded transition-colors cursor-pointer"
+                      className="w-9 h-9 flex items-center justify-center text-text-secondary hover:text-negative hover:bg-red-50 rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                       title="Delete category"
+                      aria-label="Delete category"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 ))}

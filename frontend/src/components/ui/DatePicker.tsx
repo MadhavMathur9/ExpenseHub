@@ -42,7 +42,7 @@ function toDisplay(iso: string | null | undefined): string {
 }
 
 function parseTyped(raw: string): Date | null {
-  const s = raw.replace(/[.\-]/g, "/");
+  const s = raw.replace(/[.-]/g, "/");
   for (const f of ["dd/MM/yyyy", "d/M/yyyy", "dd/MM/yy"]) {
     const d = parse(s, f, new Date());
     if (isValid(d) && getYear(d) > 1900) return d;
@@ -83,19 +83,6 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
     }
   }, [view]);
 
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    const h = (e: MouseEvent) => {
-      if (!containerRef.current?.contains(e.target as Node)) {
-        commitInput(inputText);
-        closePanel();
-      }
-    };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
-  }, [open, inputText]);
-
   const closePanel = () => { setOpen(false); setView("day"); };
 
   const commitInput = useCallback((raw: string) => {
@@ -109,6 +96,19 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
       setInputText(toDisplay(value)); // revert
     }
   }, [onChange, value]);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const h = (e: MouseEvent) => {
+      if (!containerRef.current?.contains(e.target as Node)) {
+        commitInput(inputText);
+        closePanel();
+      }
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, [open, inputText, commitInput]);
 
   // Typed input handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,10 +143,10 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
 
       {/* ─── Input ─── */}
       <div className={`
-        flex items-center h-9 lg:h-10 rounded-xl border bg-white shadow-sm text-sm
+        flex items-center h-9 lg:h-10 rounded-xl border bg-surface shadow-sm text-sm
         transition-all duration-150 overflow-hidden
-        ${open ? "border-emerald-500 ring-2 ring-emerald-500/20" : value ? "border-emerald-400/70" : "border-gray-200"}
-        hover:border-emerald-400
+        ${open ? "border-accent ring-2 ring-accent/20" : value ? "border-accent/70" : "border-border"}
+        hover:border-accent
       `}>
         <input
           ref={inputRef}
@@ -164,13 +164,13 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
             if (containerRef.current?.contains(e.relatedTarget as Node)) return;
             commitInput(inputText);
           }}
-          className="flex-1 h-full px-3 bg-transparent outline-none text-gray-800 placeholder-gray-400"
+          className="flex-1 h-full px-3 bg-transparent outline-none text-text-primary placeholder:text-text-tertiary"
         />
 
         {value && (
           <button type="button" tabIndex={-1}
             onMouseDown={(e) => { e.preventDefault(); onChange(null); setInputText(""); }}
-            className="p-1 mr-0.5 text-gray-400 hover:text-gray-600 rounded transition-colors"
+            className="p-1 mr-0.5 text-text-tertiary hover:text-text-primary rounded transition-colors"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -178,8 +178,8 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
 
         <button type="button" tabIndex={-1}
           onMouseDown={(e) => { e.preventDefault(); setOpen(p => !p); if (!open) inputRef.current?.focus(); }}
-          className={`h-full px-2.5 border-l border-gray-100 transition-colors
-            ${open ? "text-emerald-600 bg-emerald-50/70" : "text-gray-400 hover:text-emerald-600 hover:bg-emerald-50/50"}`}
+          className={`h-full px-2.5 border-l border-border transition-colors
+            ${open ? "text-accent bg-accent-subtle" : "text-text-secondary hover:text-accent hover:bg-accent-subtle/50"}`}
         >
           <Calendar className="w-4 h-4" />
         </button>
@@ -188,13 +188,13 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
       {/* ─── Popover ─── */}
       {open && (
         <div
-          className="absolute z-50 top-full mt-2 rounded-2xl border border-gray-100 bg-white shadow-2xl shadow-black/10 p-4 w-72"
+          className="absolute z-50 top-full mt-2 rounded-2xl border border-border bg-surface shadow-2xl shadow-black/10 p-4 w-72"
           onMouseDown={(e) => e.preventDefault()}
         >
           {/* ── Header ── */}
           <div className="flex items-center justify-between mb-3">
             <button type="button" onClick={() => { if (view === "day") setNavMonth(subMonths(navMonth, 1)); }}
-              className="h-7 w-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+              className="h-7 w-7 flex items-center justify-center rounded-lg text-text-secondary hover:bg-hover-row hover:text-text-primary transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </button>
 
@@ -203,7 +203,7 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
               <button type="button"
                 onClick={() => setView(v => v === "month" ? "day" : "month")}
                 className={`px-2.5 py-1 rounded-lg text-sm font-semibold transition-colors
-                  ${view === "month" ? "bg-emerald-600 text-white" : "text-gray-700 hover:bg-gray-100"}`}
+                  ${view === "month" ? "bg-accent text-white" : "text-text-primary hover:bg-hover-row"}`}
               >
                 {format(navMonth, "MMMM")}
               </button>
@@ -211,14 +211,14 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
               <button type="button"
                 onClick={() => setView(v => v === "year" ? "day" : "year")}
                 className={`px-2.5 py-1 rounded-lg text-sm font-semibold transition-colors
-                  ${view === "year" ? "bg-emerald-600 text-white" : "text-gray-700 hover:bg-gray-100"}`}
+                  ${view === "year" ? "bg-accent text-white" : "text-text-primary hover:bg-hover-row"}`}
               >
                 {getYear(navMonth)}
               </button>
             </div>
 
             <button type="button" onClick={() => { if (view === "day") setNavMonth(addMonths(navMonth, 1)); }}
-              className="h-7 w-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+              className="h-7 w-7 flex items-center justify-center rounded-lg text-text-secondary hover:bg-hover-row hover:text-text-primary transition-colors">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -228,7 +228,7 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
             <>
               <div className="grid grid-cols-7 mb-1">
                 {DAY_HEADERS.map(h => (
-                  <div key={h} className="h-8 flex items-center justify-center text-[11px] font-medium text-gray-400">{h}</div>
+                  <div key={h} className="h-8 flex items-center justify-center text-[11px] font-medium text-text-tertiary">{h}</div>
                 ))}
               </div>
               <div className="grid grid-cols-7 gap-y-0.5">
@@ -243,10 +243,10 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
                       onClick={() => selectDay(day)}
                       className={`
                         h-8 w-full flex items-center justify-center rounded-lg text-[13px] transition-all duration-100 font-medium
-                        ${selected  ? "bg-emerald-600 text-white shadow-sm scale-105"
-                          : today   ? "border border-emerald-400 text-emerald-700 hover:bg-emerald-50"
-                          : outside ? "text-gray-300 hover:text-gray-400 hover:bg-gray-50"
-                                    : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"}
+                        ${selected  ? "bg-accent text-white shadow-sm scale-105"
+                          : today   ? "border border-accent text-accent hover:bg-accent-subtle"
+                          : outside ? "text-text-tertiary/50 hover:text-text-tertiary hover:bg-hover-row"
+                                    : "text-text-primary hover:bg-accent-subtle hover:text-accent"}
                       `}
                     >
                       {format(day, "d")}
@@ -264,8 +264,8 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
                 <button key={name} type="button" onClick={() => selectMonth(i)}
                   className={`py-2 rounded-lg text-sm font-medium transition-colors
                     ${getMonth(navMonth) === i
-                      ? "bg-emerald-600 text-white shadow-sm"
-                      : "text-gray-600 hover:bg-emerald-50 hover:text-emerald-800"}`}
+                      ? "bg-accent text-white shadow-sm"
+                      : "text-text-secondary hover:bg-accent-subtle hover:text-accent"}`}
                 >
                   {name}
                 </button>
@@ -283,8 +283,8 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
                     onClick={() => selectYear(y)}
                     className={`py-2 rounded-lg text-sm font-medium transition-colors
                       ${getYear(navMonth) === y
-                        ? "bg-emerald-600 text-white shadow-sm"
-                        : "text-gray-600 hover:bg-emerald-50 hover:text-emerald-800"}`}
+                        ? "bg-accent text-white shadow-sm"
+                        : "text-text-secondary hover:bg-accent-subtle hover:text-accent"}`}
                   >
                     {y}
                   </button>
@@ -296,7 +296,7 @@ export function DatePicker({ value, onChange, placeholder = "dd/mm/yyyy", id, cl
           {/* ── Today shortcut ── */}
           {view === "day" && (
             <button type="button" onClick={() => selectDay(new Date())}
-              className="mt-3 w-full py-1.5 text-xs font-medium text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors border border-emerald-100">
+              className="mt-3 w-full py-1.5 text-xs font-medium text-accent hover:bg-accent-subtle rounded-lg transition-colors border border-border">
               Today
             </button>
           )}

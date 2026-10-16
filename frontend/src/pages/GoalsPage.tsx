@@ -302,7 +302,13 @@ export function GoalsPage() {
       {/* ── Savings summary ── */}
       <div>
         {savingsLoading ? (
-          <p className="text-[13px] text-text-secondary">Loading savings…</p>
+          <div className="space-y-2 animate-pulse py-1">
+            <div className="h-3.5 bg-[#EDEAE4] rounded w-36" />
+            <div className="flex items-baseline gap-3">
+              <div className="h-10 bg-[#EDEAE4] rounded w-48" />
+              <div className="h-4 bg-[#EDEAE4] rounded w-28" />
+            </div>
+          </div>
         ) : savings === null ? (
           <p className="text-[13px] text-text-secondary">Could not load savings data.</p>
         ) : (
@@ -391,7 +397,22 @@ export function GoalsPage() {
         </div>
 
         {milestonesLoading ? (
-          <p className="text-[13px] text-text-secondary py-6">Loading milestones…</p>
+          <Card className="divide-y divide-border !p-0">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <div key={`ms-skeleton-${idx}`} className="flex items-center gap-4 px-5 py-4 animate-pulse">
+                <div className="w-9 h-9 rounded-[8px] bg-[#EDEAE4] shrink-0" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-[#EDEAE4] rounded w-44" />
+                  <div className="h-3 bg-[#EDEAE4] rounded w-32" />
+                  <div className="h-1.5 bg-[#EDEAE4] rounded-full w-full" />
+                </div>
+                <div className="space-y-1 text-right">
+                  <div className="h-4 bg-[#EDEAE4] rounded w-28 ml-auto" />
+                  <div className="h-3 bg-[#EDEAE4] rounded w-12 ml-auto" />
+                </div>
+              </div>
+            ))}
+          </Card>
         ) : milestones.length === 0 ? (
           <Card className="py-12 text-center">
             <div className="flex flex-col items-center gap-3">
@@ -468,8 +489,9 @@ export function GoalsPage() {
                   <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2">
                     <button
                       onClick={() => { setEditTarget(m); setModalOpen(true); }}
-                      className="p-1.5 rounded-md text-text-secondary hover:text-text-primary hover:bg-hover-row transition-colors"
+                      className="w-8 h-8 flex items-center justify-center rounded-md text-text-secondary hover:text-text-primary hover:bg-hover-row transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                       title="Edit goal"
+                      aria-label="Edit goal"
                     >
                       <Pencil className="w-3.5 h-3.5" />
                     </button>
@@ -477,13 +499,13 @@ export function GoalsPage() {
                       <div className="flex items-center gap-1 text-[11px]">
                         <button
                           onClick={() => handleDelete(m.id)}
-                          className="px-2 py-1 rounded-md text-negative hover:bg-red-50 text-[11px] font-medium transition-colors"
+                          className="px-2 py-1 rounded-md text-negative hover:bg-red-50 text-[11px] font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-accent"
                         >
                           Confirm
                         </button>
                         <button
                           onClick={() => setDeletingId(null)}
-                          className="px-2 py-1 rounded-md text-text-secondary hover:bg-hover-row text-[11px] font-medium transition-colors"
+                          className="px-2 py-1 rounded-md text-text-secondary hover:bg-hover-row text-[11px] font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-accent"
                         >
                           Cancel
                         </button>
@@ -491,8 +513,9 @@ export function GoalsPage() {
                     ) : (
                       <button
                         onClick={() => setDeletingId(m.id)}
-                        className="p-1.5 rounded-md text-text-secondary hover:text-negative hover:bg-red-50 transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded-md text-text-secondary hover:text-negative hover:bg-red-50 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                         title="Delete goal"
+                        aria-label="Delete goal"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

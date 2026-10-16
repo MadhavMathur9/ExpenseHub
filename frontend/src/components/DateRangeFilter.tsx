@@ -255,27 +255,27 @@ function DateInputField({ id, label, value, onChange, minDate }: DateInputProps)
       >
         <button
           onClick={() => setNav(new Date(year, month - 1, 1))}
-          className="h-7 w-7 flex items-center justify-center rounded-md text-[#6B6B68] hover:bg-[#F5F5F4] hover:text-[#0A0A0A] transition-colors"
+          className="h-7 w-7 flex items-center justify-center rounded-md text-[#68675F] hover:bg-[#FAF8F5] hover:text-[#22221F] transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
         <div className="flex items-center gap-1">
           <button
             onClick={() => setView("months")}
-            className="text-sm font-semibold text-[#0A0A0A] hover:text-[#1A5F3F] px-2 py-0.5 rounded-md hover:bg-[#EAF3EE] transition-colors"
+            className="text-sm font-semibold text-[#22221F] hover:text-[#1B5E3F] px-2 py-0.5 rounded-md hover:bg-[#EAF3EE] transition-colors"
           >
             {format(navMonth, "MMMM")}
           </button>
           <button
             onClick={() => setView("years")}
-            className="text-sm font-semibold text-[#0A0A0A] hover:text-[#1A5F3F] px-2 py-0.5 rounded-md hover:bg-[#EAF3EE] transition-colors"
+            className="text-sm font-semibold text-[#22221F] hover:text-[#1B5E3F] px-2 py-0.5 rounded-md hover:bg-[#EAF3EE] transition-colors"
           >
             {year}
           </button>
         </div>
         <button
           onClick={() => setNav(new Date(year, month + 1, 1))}
-          className="h-7 w-7 flex items-center justify-center rounded-md text-[#6B6B68] hover:bg-[#F5F5F4] hover:text-[#0A0A0A] transition-colors"
+          className="h-7 w-7 flex items-center justify-center rounded-md text-[#68675F] hover:bg-[#FAF8F5] hover:text-[#22221F] transition-colors"
         >
           <ChevronRight className="h-4 w-4" />
         </button>
@@ -309,7 +309,7 @@ function DateInputField({ id, label, value, onChange, minDate }: DateInputProps)
                 "focus:outline-none focus:ring-2",
                 isError
                   ? "border-red-400 focus:border-red-500 focus:ring-red-400/20"
-                  : "border-[#EAEAE8] hover:border-[#DCDCD9] focus:border-[#1A5F3F] focus:ring-[#1A5F3F]/20"
+                  : "border-[#DEDDD6] hover:border-[#C8C7BE] focus:border-[#1B5E3F] focus:ring-[#1B5E3F]/20"
               )}
             />
             {isError && (
@@ -325,7 +325,7 @@ function DateInputField({ id, label, value, onChange, minDate }: DateInputProps)
                 onClick={handleClear}
                 tabIndex={-1}
                 aria-label="Clear date"
-                className="absolute right-8 top-1/2 -translate-y-1/2 text-[#9C9C98] hover:text-[#6B6B68] transition-colors cursor-pointer focus:outline-none"
+                className="absolute right-8 top-1/2 -translate-y-1/2 text-[#9C9B92] hover:text-[#68675F] transition-colors cursor-pointer focus:outline-none"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -337,7 +337,7 @@ function DateInputField({ id, label, value, onChange, minDate }: DateInputProps)
               tabIndex={-1}
               aria-label="Open date picker"
               onClick={() => setOpen((o) => !o)}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9C9C98] hover:text-[#1A5F3F] transition-colors cursor-pointer focus:outline-none"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9C9B92] hover:text-[#1B5E3F] transition-colors cursor-pointer focus:outline-none"
             >
               <CalendarIcon className="h-4 w-4" />
             </button>
@@ -346,7 +346,7 @@ function DateInputField({ id, label, value, onChange, minDate }: DateInputProps)
 
         <PopoverContent
           style={{ width: PICKER_WIDTH }}
-          className="p-0 shadow-xl border border-[#EAEAE8] rounded-xl overflow-hidden"
+          className="p-0 shadow-xl border border-[#DEDDD6] rounded-xl overflow-hidden bg-white"
           align="start"
           sideOffset={8}
           avoidCollisions
