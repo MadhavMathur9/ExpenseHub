@@ -5,7 +5,7 @@
   <br />
   <br />
 
-  [![Live Demo](https://img.shields.io/badge/Demo-my--expensehub.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://my-expensehub.netlify.app)
+  [![Live Demo](https://img.shields.io/badge/Demo-my--expensehub.netlify.app-1B5E3F?style=for-the-badge&logo=netlify&logoColor=white)](https://my-expensehub.netlify.app)
   [![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
   [![Spring Boot](https://img.shields.io/badge/Spring_Boot_3-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
   [![Keycloak](https://img.shields.io/badge/Keycloak-008A87?style=for-the-badge&logo=keycloak&logoColor=white)](https://www.keycloak.org/)
@@ -13,18 +13,11 @@
   [![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75C2?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
   <p align="center">
-    <b>A modern full-stack personal finance tracker built to help users manage their income, expenses, and savings goals with AI advisory and enterprise-grade authentication.</b>
+    <b>Smart cash flow intelligence, automated goal pacing, and AI-driven financial advisory.</b>
   </p>
 
   <p align="center">
     <a href="https://my-expensehub.netlify.app"><strong>Explore Live Demo »</strong></a>
-    <br />
-    <br />
-    <a href="#key-features">Key Features</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#how-authentication-works">How Authentication Works</a> •
-    <a href="#local-setup">Local Setup</a> •
-    <a href="#author">Author</a>
   </p>
 
 </div>
@@ -33,9 +26,9 @@
 
 ## 🌟 Overview
 
-**Live Demo:** [https://my-expensehub.netlify.app](https://my-expensehub.netlify.app)
+ExpenseHub is an end-to-end personal finance management platform designed to help you monitor, budget, and optimize your money in one unified dashboard. Instead of relying on static spreadsheets, ExpenseHub provides interactive visual breakdowns of your cash flow, dynamic multi-horizon savings goals with velocity tracking, and an intelligent financial advisor powered by Google's Gemini API that delivers tailored advice based on your spending habits.
 
-ExpenseHub is a full-stack personal finance tracker built to help users manage their income, expenses, and savings goals. The application includes a financial dashboard, a custom AI advisor (using the Google Gemini API), and secure authentication handled by Keycloak.
+User authentication and federated Single Sign-On (Google and Microsoft) are managed through a dedicated Keycloak instance, ensuring secure session management and keeping user credentials isolated from the main application database.
 
 ---
 
