@@ -16,9 +16,10 @@ export function AuthCallbackPage() {
     
     const code = searchParams.get('code');
     const err = searchParams.get('error');
+    const errDesc = searchParams.get('error_description');
 
     if (err) {
-      setError(err);
+      setError(errDesc ? `${err}: ${errDesc}` : err);
       return;
     }
 

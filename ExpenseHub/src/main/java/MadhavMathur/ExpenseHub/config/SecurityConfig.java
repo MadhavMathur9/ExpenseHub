@@ -14,8 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,14 +86,22 @@ public class SecurityConfig {
 
     /**
      * Custom converter that extracts the user's email from the Keycloak JWT
-     * and uses it as the principal name (instead of the 'sub' UUID).
-     * This ensures principal.getName() returns the email across all controllers.
+     * and uses it as the principal name (instead of the 'sub' UUID or non-email username).
+     * This ensures principal.getName() always returns the user's email across all controllers.
      */
     @Bean
     public Converter<Jwt, ? extends AbstractAuthenticationToken> keycloakJwtAuthConverter() {
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setPrincipalClaimName("preferred_username");
-        return converter;
+        JwtAuthenticationConverter defaultConverter = new JwtAuthenticationConverter();
+        return jwt -> {
+            AbstractAuthenticationToken token = defaultConverter.convert(jwt);
+            Collection<GrantedAuthority> authorities = token != null ? token.getAuthorities() : List.of();
+            String email = jwt.getClaimAsString("email");
+            String username = (email != null && !email.isBlank()) ? email : jwt.getClaimAsString("preferred_username");
+            if (username == null || username.isBlank()) {
+                username = jwt.getSubject();
+            }
+            return new JwtAuthenticationToken(jwt, authorities, username);
+        };
     }
 
     @Bean
